@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Course Details | Auroria University</title>
+    <link href="courses.css" rel="stylesheet" />
+    <link href="shared-navbar.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="auroria-redesign.css" rel="stylesheet" />
+    <script defer src="shared-navbar.js"></script>
+</head>
+
+<body>
+    <header class="shared-site-header">
+        <a class="about-logo" href="index.html">
+            <img alt="Auroria University Logo" class="brand-logo" src="image/auroria-crest.png" />
+            <span><strong>AURORIA</strong><small>UNIVERSITY</small></span>
+        </a>
+        <button aria-controls="main-navigation" aria-expanded="false" aria-label="Open navigation menu"
+            class="shared-menu-toggle" type="button">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="about-nav" id="main-navigation" aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a class="active" aria-current="page" href="courses.html">Academics</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="campus-life.html">Campus Life</a>
+            <a href="FAQ.html">FAQs &amp; Contact</a>
+        </nav>
+        <a class="about-nav-button" href="register.html">Apply Now</a>
+    </header>
+    <main class="course-detail-page">
+        <div class="section-container">
+            <a class="back-link" href="courses.html">← Back to all courses</a>
+            <div class="loading-message" id="detailLoading">Loading course details...</div>
+            <div class="error-state" hidden="" id="detailError">
+                <h2>Course details unavailable</h2>
+                <p id="detailErrorMessage">We could not load this course.</p>
+                <a class="primary-button" href="courses.html">Browse Courses</a>
+            </div>
+            <article hidden="" id="courseDetails">
+                <section class="detail-hero">
+                    <span class="eyebrow">AURORIA UNIVERSITY · COURSE DETAILS</span>
+                    <span class="course-code" id="detailCode"></span>
+                    <h1 id="detailName"></h1>
+                    <p id="detailDescription"></p>
+                    <span class="availability-badge" id="detailAvailability"></span>
+                </section>
+                <section class="detail-information">
+                    <h2>Programme overview</h2>
+                    <div class="detail-grid">
+                        <div><span>Department</span><strong id="detailDepartment"></strong></div>
+                        <div><span>Faculty</span><strong id="detailFaculty"></strong></div>
+                        <div><span>Course level</span><strong id="detailLevel"></strong></div>
+                        <div><span>Duration</span><strong id="detailDuration"></strong></div>
+                        <div><span>Estimated fee</span><strong id="detailFee"></strong></div>
+                    </div>
+                </section>
+                <section class="requirements-panel">
+                    <span class="eyebrow">ENTRY INFORMATION</span>
+                    <h2>Admission requirements</h2>
+                    <p id="detailRequirements">Contact the university for admission requirements.</p>
+                </section>
+                <div class="detail-apply">
+                    <div>
+                        <h2>Ready to take the next step?</h2>
+                        <p>Start your application to Auroria University.</p>
+                    </div>
+                    <a class="cta-button" href="register.html">Apply Now ↗</a>
+                </div>
+            </article>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-main">
+            <a class="brand footer-brand" href="index.html">
+                <img alt="Auroria University Logo" class="brand-logo" src="image/auroria-crest.png" />
+                <span><strong>AURORIA</strong><small>UNIVERSITY</small></span>
+            </a>
+            <p>Empowering minds. Inspiring futures.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="courses.html">Courses</a>
+                <a href="admissions.html">Admissions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="currentYear"></span> Auroria University. All rights reserved.</p>
+        </div>
+    </footer>
+    <script defer src="app-config.js"></script>
+    <script defer src="course-details.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+/* Shared Auroria University navigation — used across public pages */
+.shared-site-header {
+    position: sticky !important;
+    top: 0;
+    z-index: 2000;
+    width: 100%;
+    min-height: 82px;
+    padding: 14px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 1px solid #e4e8ed;
+    box-shadow: 0 3px 16px rgba(16, 36, 58, 0.045);
+    backdrop-filter: blur(12px);
+}
+.shared-site-header .about-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 11px;
+    flex-shrink: 0;
+    color: #10243a;
+    text-decoration: none;
+}
+.shared-site-header .brand-logo {
+    display: block;
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+.shared-site-header .about-logo span {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+.shared-site-header .about-logo strong {
+    color: #10243a;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+.shared-site-header .about-logo small {
+    margin-top: 4px;
+    color: #697586;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+}
+.shared-site-header .about-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: clamp(14px, 2vw, 26px);
+    width: auto;
+    padding: 0;
+    order: initial;
+}
+.shared-site-header .about-nav a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 42px;
+    white-space: nowrap;
+    color: #243447;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color .2s ease;
+}
+.shared-site-header .about-nav a:hover,
+.shared-site-header .about-nav a.active {
+    color: #234b70;
+}
+.shared-site-header .about-nav a.active {
+    font-weight: 700;
+}
+
+.shared-site-header .about-nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    flex-shrink: 0;
+    padding: 12px 19px;
+    border: 0;
+    border-radius: 6px;
+    background: #10243a;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background .2s ease, transform .2s ease;
+}
+.shared-site-header .about-nav-button:hover {
+    background: #234b70;
+    transform: translateY(-1px);
+}
+.shared-site-header .about-nav-button span {
+    color: #c6a66b;
+}
+.shared-menu-toggle {
+    display: none;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 9px;
+    border: 1px solid #e4e8ed;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+.shared-menu-toggle span {
+    display: block;
+    height: 2px;
+    width: 22px;
+    margin: 4px 0;
+    background: #10243a;
+}
+.shared-site-header a:focus-visible,
+.shared-menu-toggle:focus-visible {
+    outline: 2px solid #c6a66b;
+    outline-offset: 3px;
+}
+html {
+    scroll-padding-top: 100px;
+}
+@media (max-width: 1100px) {
+    .shared-site-header {
+        gap: 18px;
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+    .shared-site-header .about-nav {
+        gap: 14px;
+    }
+    .shared-site-header .about-nav a {
+        font-size: 12px;
+    }
+    .shared-site-header .about-nav-button {
+        padding: 11px 14px;
+    }
+}
+@media (max-width: 820px) {
+    .shared-site-header {
+        min-height: 72px;
+        padding: 12px 5%;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+    }
+    .shared-site-header .brand-logo {
+        width: 42px;
+        height: 42px;
+    }
+    .shared-menu-toggle {
+        display: block;
+        margin-left: auto;
+    }
+    .shared-site-header .about-nav {
+        display: none;
+        order: 4;
+        flex: 0 0 100%;
+        width: 100%;
+        padding: 8px 0 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        border-top: 1px solid #e4e8ed;
+    }
+    .shared-site-header .about-nav.is-open {
+        display: flex;
+    }
+    .shared-site-header .about-nav a {
+        min-height: 44px;
+        width: 100%;
+        font-size: 13px;
+        border-bottom: 1px solid #f0eee9;
+    }
+    .shared-site-header .about-nav a.active::after {
+        left: auto;
+        width: 28px;
+        bottom: 0;
+    }
+    .shared-site-header .about-nav-button {
+        order: 3;
+        padding: 10px 13px;
+        font-size: 12px;
+    }
+}
+@media (max-width: 420px) {
+    .shared-site-header {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .shared-site-header .about-logo strong {
+        font-size: 14px;
+    }
+    .shared-site-header .about-logo small {
+        font-size: 9px;
+    }
+    .shared-site-header .about-nav-button {
+        display: inline-flex;
+        padding: 9px 10px;
+        font-size: 11px;
+    }
+}

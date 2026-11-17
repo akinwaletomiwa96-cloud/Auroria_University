@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admissions Portal | Auroria University</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="admissionsDS.css">
+
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="brand">
+
+                <img src="../image/auroria-crest.png" alt="Auroria University" class="brand-logo">
+
+                <div>
+                    <strong>AURORIA</strong>
+                    <span>University</span>
+                </div>
+
+            </div>
+
+            <div class="sidebar-section-label">
+                ADMISSIONS PORTAL
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <button class="nav-link active" data-page="overview">
+
+                    <span class="nav-icon">⌂</span>
+                    <span>Overview</span>
+
+                </button>
+
+                <button class="nav-link" data-page="applications">
+
+                    <span class="nav-icon">▤</span>
+                    <span>Applications</span>
+                    <span class="nav-count" id="pendingApplicationCount"></span>
+
+                </button>
+
+                <button class="nav-link" data-page="communications">
+                    <span>✉</span>
+                    <span>Communication Centre</span>
+                </button>
+
+                <button class="nav-link" data-page="documents">
+
+                    <span class="nav-icon">▧</span>
+                    <span>Document verification</span>
+
+                </button>
+
+                <button class="nav-link" data-page="decisions">
+
+                    <span class="nav-icon">✓</span>
+                    <span>Admission decisions</span>
+
+                </button>
+
+                <button class="nav-link" data-page="enquiries">
+
+                    <span class="nav-icon">✉</span>
+                    <span>Enquiries</span>
+                    <span class="nav-count" id="pendingEnquiryCount">0</span>
+
+                </button>
+
+                <button class="nav-link" data-page="reports">
+
+                    <span class="nav-icon">▥</span>
+                    <span>Reports</span>
+
+                </button>
+
+                <div class="sidebar-section-label">
+                    PERSONAL
+                </div>
+
+                <button class="nav-link" data-page="notifications">
+
+                    <span class="nav-icon">♧</span>
+                    <span>Notifications</span>
+                    <span class="notification-dot hidden" id="notificationDot"></span>
+
+                </button>
+
+                <button class="nav-link" data-page="profile">
+
+                    <span class="nav-icon">◎</span>
+                    <span>My profile</span>
+
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+              
+
+                <button class="logout-button" id="logoutButton">
+
+                    <span>↪</span>
+                    Sign out
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN AREA -->
+
+        <main class="main-area">
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button id="mobileMenu" class="mobile-menu">
+                        ☰
+                    </button>
+
+                    <div>
+
+                        <div class="breadcrumb">
+                            Auroria University / Admissions
+                        </div>
+
+                        <h1 id="pageTitle">
+                            Admissions overview
+                        </h1>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <button class="icon-button" data-page="notifications" title="Notifications">
+
+                        ♧
+
+                        <span class="top-notification-dot hidden" id="topNotificationDot"></span>
+
+                    </button>
+
+                    <div class="user-chip">
+
+                        <div class="user-avatar" id="headerAvatar">
+                            AO
+                        </div>
+
+                        <div class="user-info">
+
+                            <strong id="headerName">
+                                Admissions Officer
+                            </strong>
+
+                            <span>Admissions Officer</span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- GLOBAL ALERT -->
+
+            <div id="globalAlert" class="global-alert hidden"></div>
+
+
+            <!-- PAGE CONTENT -->
+
+            <div id="pageContent" class="content-wrapper">
+
+                <div class="loading-state">
+                    Loading admissions portal...
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <footer class="dashboard-footer">
+
+                <span>
+                    © <span id="year"></span> Auroria University
+                </span>
+
+                <span>
+                    Admissions Management Portal
+                </span>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- DETAILS DIALOG -->
+
+    <dialog id="detailDialog" class="detail-dialog">
+
+        <div class="dialog-header">
+
+            <div>
+                <span class="eyebrow">AURORIA UNIVERSITY</span>
+                <h2 id="dialogTitle">Details</h2>
+            </div>
+
+            <button class="dialog-close" data-action="close-dialog">
+                ×
+            </button>
+
+        </div>
+
+        <div id="dialogContent"></div>
+
+    </dialog>
+
+
+    <!-- TOAST REGION -->
+
+    <div id="toastRegion" class="toast-region"></div>
+
+
+    <script src="admissionsDS.js"></script>
+
+</body>
+
+</html>

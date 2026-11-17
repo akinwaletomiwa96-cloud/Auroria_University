@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Student Dashboard | Auroria University</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="dashboard.css" rel="stylesheet" />
+    <script defer src="app-config.js"></script>
+    <script defer="" src="dashboard.js"></script>
+    <link href="auroria-redesign.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar" id="sidebar">
+            <a class="brand" href="#pageContent">
+                <span class="brand-mark"><img alt="Auroria University crest" src="image/auroria-crest.png" /></span>
+                <span><strong>AURORIA</strong><small>UNIVERSITY</small></span>
+            </a>
+            <div class="sidebar-label">STUDENT SPACE</div>
+            <nav aria-label="Main navigation" class="side-nav">
+                <button class="nav-link active" data-page="overview">▦ Overview</button>
+                <button class="nav-link" data-page="applications">▤ My applications</button>
+                <button class="nav-link" data-page="courses">⌕ Explore courses</button>
+                <button class="nav-link" data-page="profile">♙ My profile</button>
+                <button class="nav-link" data-page="payments">₦ Payments</button>
+                <button class="nav-link" data-page="notifications">
+                    ✉ Messages
+                    <span id="notificationBadge" class="notification-badge hidden">0</span>
+                </button>
+                <button class="nav-link" data-page="requirements">✓ Entry requirements</button>
+                <button class="nav-link" data-page="enquiries">✉ Enquiries</button>
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="help-card">
+                    <strong>Need some help?</strong>
+                    <p>Our student support team is here for you.</p>
+                    <button class="text-button" data-page="enquiries">Contact support →</button>
+                </div>
+                <button class="nav-link" id="logoutButton">↪ Log out</button>
+            </div>
+        </aside>
+        <main class="main-area">
+            <header class="topbar">
+                <button aria-label="Toggle menu" class="mobile-menu" id="mobileMenu">☰</button>
+                <div class="breadcrumb">
+                    <span>Student portal</span>
+                    <span>/</span>
+                    <strong id="pageTitle">Overview</strong>
+                </div>
+                <div class="topbar-actions">
+                    <button aria-label="Messages" class="icon-button" data-page="notifications"
+                        style="position: relative;">
+                        ✉
+                        <span id="topNotificationDot" class="notification-dot hidden"></span>
+                    </button>
+                    <div class="user-chip">
+                        <div class="avatar" id="headerAvatar">AU</div>
+                        <div>
+                            <strong id="headerName">Student</strong>
+                            <small>Student account</small>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="content-wrap">
+                <div class="alert hidden" id="globalAlert" role="status"></div>
+                <section aria-live="polite" id="pageContent">
+                    <p>Loading your student dashboard...</p>
+                </section>
+            </div>
+        </main>
+    </div>
+    <dialog class="detail-dialog" id="detailDialog">
+        <form method="dialog">
+            <button aria-label="Close" class="dialog-close">×</button>
+        </form>
+        <div id="dialogContent"></div>
+    </dialog>
+    <div aria-live="polite" class="toast-region" id="toastRegion"></div>
+</body>
+
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Application | Auroria University</title>
+  <link href="application-form.css" rel="stylesheet" />
+  <script defer src="app-config.js"></script>
+  <script defer="" src="application-form.js"></script>
+  <link href="auroria-redesign.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="dashboard.html">
+      <img class="brand-logo" src="image/loggggg.png" alt="">
+      <span>Auroria <span class="brand-light">University</span></span>
+    </a>
+    <a class="back-link" href="dashboard.html">← Dashboard</a>
+  </header>
+  <main class="container">
+    <div class="page-top">
+      <div>
+        <span class="eyebrow">ADMISSIONS</span>
+        <h1>Apply to Auroria</h1>
+        <p class="intro-copy">Your details, examination result and chosen programme.</p>
+      </div>
+      <div class="secure-note">
+        <span class="secure-dot"></span> Secure application
+      </div>
+    </div>
+    <div class="stepper">
+      <div class="step-item active" data-step-indicator="1">
+        <span class="step-dot">1</span><span>Personal</span>
+      </div>
+      <span class="step-line"></span>
+      <div class="step-item" data-step-indicator="2">
+        <span class="step-dot">2</span><span>Result</span>
+      </div>
+      <span class="step-line"></span>
+      <div class="step-item" data-step-indicator="3">
+        <span class="step-dot">3</span><span>Programme</span>
+      </div>
+    </div>
+    <div class="progress-track">
+      <div id="progressFill"></div>
+    </div>
+    <form id="applicationForm" novalidate="">
+      <!-- STEP 1: PERSONAL DETAILS -->
+      <section class="form-section active" data-step="1">
+        <div class="section-heading">
+          <div>
+            <h2>Your details</h2>
+            <p>How can we identify and contact you?</p>
+          </div>
+          <span class="section-count">01 / 03</span>
+        </div>
+        <div class="field-grid">
+          <label>
+            Full name <span class="required">*</span>
+            <input autocomplete="name" id="fullName" name="fullName" required="" type="text" />
+          </label>
+          <label>
+            Date of birth <span class="required">*</span>
+            <input id="dateOfBirth" name="dateOfBirth" required="" type="date" />
+          </label>
+          <label>
+            Gender <span class="required">*</span>
+            <select id="gender" name="gender" required="">
+              <option value="">Choose one</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+              <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+          </label>
+          <label>
+            Nationality <span class="required">*</span>
+            <input id="nationality" name="nationality" required="" value="Nigerian" />
+          </label>
+          <label class="full-width">
+            Residential address <span class="required">*</span>
+            <input autocomplete="street-address" id="address" name="address" required="" />
+          </label>
+          <label>
+            City <span class="required">*</span>
+            <input id="city" name="city" required="" />
+          </label>
+          <label>
+            State / Region <span class="required">*</span>
+            <input id="state" name="state" required="" />
+          </label>
+          <label>
+            Country <span class="required">*</span>
+            <input id="country" name="country" required="" value="Nigeria" />
+          </label>
+          <label>
+            Emergency contact name <span class="required">*</span>
+            <input id="emergencyName" name="emergencyName" required="" />
+          </label>
+          <label>
+            Emergency contact phone <span class="required">*</span>
+            <input autocomplete="tel" id="emergencyPhone" name="emergencyPhone" required="" type="tel" />
+          </label>
+        </div>
+      </section>
+      <!-- STEP 2: EXAMINATION RESULT UPLOAD -->
+      <section class="form-section" data-step="2">
+        <div class="section-heading">
+          <div>
+            <h2>Your examination result</h2>
+            <p>Upload your result and provide its examination details.</p>
+          </div>
+          <span class="section-count">02 / 03</span>
+        </div>
+        <div id="academicRecords">
+          <article class="academic-record">
+            <div class="record-top">
+              <span class="record-icon">▤</span>
+              <div>
+                <h3>Qualification 1</h3>
+                <p>Result document and examination details</p>
+              </div>
+              <button class="text-button remove-record" hidden="" type="button">
+                Remove
+              </button>
+            </div>
+            <div class="field-grid">
+              <label>
+                School / Institution <span class="required">*</span>
+                <input name="institutionName" required="" type="text" />
+              </label>
+              <label>
+                Qualification <span class="required">*</span>
+                <select name="qualificationName" required="">
+                  <option value="">Choose qualification</option>
+                  <option value="SSCE">SSCE</option>
+                  <option value="WASSCE">WASSCE</option>
+                  <option value="NECO SSCE">NECO SSCE</option>
+                  <option value="GCE">GCE</option>
+                  <option value="IGCSE">IGCSE</option>
+                  <option value="A-Level">A-Level</option>
+                  <option value="Diploma">Diploma</option>
+                  <option value="OND">OND</option>
+                  <option value="HND">HND</option>
+                  <option value="Bachelor's Degree">Bachelor's Degree</option>
+                  <option value="Other">Other</option>
+                </select>
+              </label>
+              <label>
+                Examination body <span class="required">*</span>
+                <select name="examinationBody" required="">
+                  <option value="">Choose exam body</option>
+                  <option value="WAEC">WAEC</option>
+                  <option value="NECO">NECO</option>
+                  <option value="Cambridge International">Cambridge International</option>
+                  <option value="Pearson Edexcel">Pearson Edexcel</option>
+                  <option value="JAMB">JAMB</option>
+                  <option value="Other">Other</option>
+                </select>
+              </label>
+              <label>
+                Examination number <span class="required">*</span>
+                <input maxlength="50" name="examinationNumber" placeholder="Candidate / registration number" required=""
+                  type="text" />
+              </label>
+              <label>
+                Examination year <span class="required">*</span>
+                <input max="2100" min="1950" name="examinationYear" placeholder="e.g. 2025" required="" type="number" />
+              </label>
+            </div>
+            <div class="upload-area">
+              <input accept=".jpg,.jpeg,.png,.webp,.pdf" class="result-file-input" hidden="" name="resultFile"
+                required="" type="file" />
+              <div class="upload-icon">↑</div>
+              <div class="upload-copy">
+                <strong>Upload your result</strong>
+                <span>JPG, PNG, WEBP or PDF · Maximum 8 MB</span>
+                <small>Use a clear photo or scan showing the examination details and grades.</small>
+              </div>
+              <button class="choose-file secondary-button" type="button">
+                Choose file
+              </button>
+              <div class="file-selected" hidden="">
+                <span class="file-name"></span>
+                <button aria-label="Remove uploaded file" class="remove-file" type="button">×</button>
+              </div>
+            </div>
+            <div class="verification-note">
+              <span class="status-dot"></span>
+              <div>
+                <strong>Officer verification required</strong>
+                <p>Your result remains pending until an authorised admissions officer reviews it.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+        <button class="add-qualification" id="addRecord" type="button">
+          <span>＋</span> Add another qualification
+        </button>
+        <p class="privacy-note">
+          Upload only your own documents. Your examination number and result
+          will be used for admissions verification.
+        </p>
+      </section>
+      <!-- STEP 3: COURSE AND INTAKE -->
+      <section class="form-section" data-step="3">
+        <div class="section-heading">
+          <div>
+            <h2>Choose your programme</h2>
+            <p>Select the course and intake you want.</p>
+          </div>
+          <span class="section-count">03 / 03</span>
+        </div>
+        <div class="field-grid">
+          <label class="full-width">
+            Course <span class="required">*</span>
+            <select id="courseId" name="courseId" required="">
+              <option value="">Loading courses…</option>
+            </select>
+          </label>
+          <label>
+            Intake <span class="required">*</span>
+            <select id="intake" name="intake" required="">
+              <option value="">Choose intake</option>
+              <option value="January">January</option>
+              <option value="May">May</option>
+              <option value="September">September</option>
+            </select>
+          </label>
+          <label>
+            Academic year <span class="required">*</span>
+            <select id="academicYear" name="academicYear" pattern="[0-9]{4}/[0-9]{4}"required="">
+                <option value="2026/2027">2026/2027</option>
+                <option value="2027/2028">2027/2028</option>
+              </select>
+          </label>
+        </div>
+        <div class="summary-card">
+          <span class="summary-icon">✓</span>
+          <div>
+            <strong>Ready for review</strong>
+            <p>Check your details before submitting. Your reference code and application status are generated by the
+              system.</p>
+          </div>
+        </div>
+      </section>
+      <p aria-live="polite" class="message" id="formMessage" role="alert"></p>
+      <div class="form-actions">
+        <button class="secondary-button" hidden="" id="previousButton" type="button">← Back</button>
+        <span class="action-spacer"></span>
+        <button class="primary-button" id="nextButton" type="button">Continue →</button>
+        <button class="primary-button" hidden="" id="submitButton" type="submit">Submit application →</button>
+      </div>
+    </form>
+    <footer>
+      <div class="au-footer-identity"><img alt="Auroria University crest" class="au-footer-crest"
+          src="image/auroria-crest.png" /><span>AURORIA UNIVERSITY</span></div>© <span id="currentYear"></span> Auroria
+      University
+    </footer>
+  </main>
+</body>
+
+</html>

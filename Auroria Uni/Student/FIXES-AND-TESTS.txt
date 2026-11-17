@@ -1,0 +1,41 @@
+AURORIA UNIVERSITY — CONSOLIDATED FRONTEND FIXES
+================================================
+
+FIXED IN THIS PASS
+------------------
+1. Local asset references: all HTML-referenced local files resolve within this ZIP.
+2. Public navigation: a single shared script now controls the mobile menu on Home, About, Admissions, FAQs & Contact, Campus Life, Courses, and Course Details.
+3. Mobile menu behaviour: toggle, aria-expanded/aria-label updates, close after selecting a link, close on outside click, close on Escape, and close when returning to desktop width.
+4. Course Details navigation: moved to the same shared navigation markup and behaviour.
+5. FAQ enquiry form: removed the second submit listener; one submit now makes one POST request.
+6. FAQ response handling: empty/non-JSON response bodies no longer cause JSON parsing to fail; returned enquiry reference is shown when available.
+7. Login response handling: accepts common response wrappers and common access-token property names; saves a positive numeric user ID and basic user profile.
+8. Login routing: no longer redirects to missing admin-dashboard.html or admissions-dashboard.html. Staff accounts receive a clear message instead of being sent to the student portal.
+9. Dashboard: loads the stored login profile for the greeting; clears stored user/session values on logout; requires a stored user ID before opening.
+10. Application form: requires sign-in before opening, honours the return URL after login, and attaches a bearer token to the multipart application request when the backend supplies one.
+11. API configuration: API host is centralised in app-config.js (default http://localhost:8080).
+12. Currency display: standardised to NGN / en-NG by default and made configurable in app-config.js.
+13. Course explorer: honours homepage department query strings where a matching department can be identified.
+14. Broken anchors: corrected admissions document-preparation link and dashboard brand anchor.
+15. Mobile CTA: keeps the Apply Now action visible at narrow widths.
+
+LOCAL CHECKS RUN
+----------------
+- node --check passed for every JavaScript file.
+- HTML local src/href reference scan: no missing local files.
+- Same-page anchor scan: no broken same-page anchors.
+- CSS brace-balance scan: no mismatches.
+- Duplicate shared navigation script scan: no duplicate includes.
+
+NOT VERIFIED / REQUIRES BACKEND
+-------------------------------
+- Live registration and login success against the actual Spring Boot DTOs.
+- Whether the backend returns an access token and which exact field contains it.
+- API authorization and Spring Security role/ownership enforcement.
+- Course, department, enquiry, application, and dashboard endpoint responses.
+- Multipart application upload controller, file storage, DB transactions, and server-generated reference codes.
+- Email verification, payment processing, staff dashboards, and production hosting.
+
+IMPORTANT
+---------
+Client-side checks are not a security boundary. Enforce authentication, authorization, input validation, file validation, and ownership on the Spring Boot server. This update does not modify the database or backend code.

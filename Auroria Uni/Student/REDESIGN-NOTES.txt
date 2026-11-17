@@ -1,0 +1,24 @@
+AURORIA UNIVERSITY — FRONTEND UPDATE NOTES
+==========================================
+
+Theme: forest green, warm ivory and copper. The homepage slideshow uses supplied local image assets and supports manual controls, autoplay pause and reduced-motion preferences.
+
+This frontend package has been updated to:
+- Resolve all local HTML/CSS/JavaScript references found by the local reference checker.
+- Standardise public-page mobile navigation using shared-navbar.js and shared-navbar.css.
+- Standardise Course Details navigation with the same shared header.
+- Remove the duplicate FAQ contact-form submit listener so an enquiry is submitted once.
+- Make enquiry responses tolerant of JSON or empty response bodies and show reference identifiers when available.
+- Use app-config.js for the Spring Boot API host and fee currency configuration.
+- Use NGN / en-NG as the default displayed fee currency; change app-config.js if the approved institutional currency differs.
+- Store common bearer-token response fields returned by login and attach the token to relevant requests when supplied.
+- Avoid redirecting staff accounts to missing staff dashboard files. Staff dashboards are not implemented in this frontend.
+- Protect the student dashboard and application form from unauthenticated direct access using a client-side sign-in check. Server-side authorization remains mandatory.
+- Honour homepage department query links in the course explorer.
+- Correct broken same-page anchors and navigation targets.
+
+INTEGRATION LIMITATION
+----------------------
+The ZIP contains frontend files only. The Spring Boot source and live database are not included. API routes, DTO fields, CORS, Spring Security rules, upload handling, and database persistence must be verified against the running backend. See BACKEND-INTEGRATION-CHECKLIST.md.
+
+No database files, SQL data, or Spring Boot source were changed.

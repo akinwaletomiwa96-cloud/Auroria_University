@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>FAQs &amp; Contact | Auroria University</title>
+  <meta content="Find answers to common questions and contact Auroria University." name="description" />
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap"
+    rel="stylesheet" />
+  <link href="FAQ.css" rel="stylesheet" />
+  <link href="shared-navbar.css" rel="stylesheet" />
+
+  <script defer src="app-config.js"></script>
+  <script defer="" src="FAQ.js"></script>
+  <link href="auroria-redesign.css" rel="stylesheet" />
+  <script defer src="shared-navbar.js"></script>
+</head>
+
+<body id="top">
+  <!-- NAVBAR -->
+  <header class="shared-site-header">
+    <a class="about-logo" href="index.html">
+      <img alt="Auroria University Logo" class="brand-logo" src="image/auroria-crest.png" />
+      <span>
+        <strong>AURORIA</strong>
+        <small>UNIVERSITY</small>
+      </span>
+    </a>
+    <button aria-controls="main-navigation" aria-expanded="false" aria-label="Open navigation menu"
+      class="shared-menu-toggle" type="button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="about-nav" id="main-navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Academics</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="campus-life.html">Campus Life</a>
+      <a class="active" aria-current="page" href="FAQ.html">FAQs &amp; Contact</a>
+    </nav>
+    <a class="about-nav-button" href="register.html">
+      Apply Now
+    </a>
+  </header>
+  <main>
+    <!-- HERO -->
+    <section class="faq-hero">
+      <div class="faq-hero-bg"></div>
+      <div class="faq-hero-content">
+        <span class="faq-eyebrow"><span class="eyebrow-line"></span> WE'RE HERE TO HELP</span>
+        <h1>Questions?<br /><span>Let's find your answers.</span></h1>
+        <p>
+          Whether you're exploring our courses, preparing your application
+          or learning more about university life, start here. And if you
+          still need help, our contact section is ready for you.
+        </p>
+        <a class="faq-primary-btn" href="#faq-list">Explore FAQs <span>↓</span></a>
+        <a class="faq-hero-link" href="#contact-us">Talk to us <span>↗</span></a>
+      </div>
+      <div class="faq-hero-bottom">
+        <span>YOUR QUESTIONS MATTER</span>
+        <span>AURORIA UNIVERSITY · SUPPORT</span>
+      </div>
+    </section>
+    <!-- QUICK CONTACT STRIP -->
+    <section class="faq-quick-contact">
+      <a class="quick-contact-item" href="#faq-list">
+        <span class="quick-icon">?</span>
+        <span><strong>Find an answer</strong><small>Browse common questions</small></span>
+        <span class="quick-arrow">↗</span>
+      </a>
+      <a class="quick-contact-item" href="#contact-us">
+        <span class="quick-icon">✉</span>
+        <span><strong>Send an enquiry</strong><small>Tell us what you need</small></span>
+        <span class="quick-arrow">↗</span>
+      </a>
+      <a class="quick-contact-item" href="#visit-us">
+        <span class="quick-icon">⌖</span>
+        <span><strong>Find our campus</strong><small>View location information</small></span>
+        <span class="quick-arrow">↗</span>
+      </a>
+    </section>
+    <!-- FAQ SECTION -->
+    <section class="faq-main section-space" id="faq-list">
+      <div class="faq-section-intro">
+        <div>
+          <span class="section-label">FREQUENTLY ASKED QUESTIONS</span>
+          <h2>Good questions.<br /><span>Clear answers.</span></h2>
+        </div>
+        <p>
+          We've organised some common questions to help you find
+          the information you're looking for without the extra steps.
+        </p>
+      </div>
+      <!-- SEARCH -->
+      <div class="faq-search-wrap">
+        <span class="faq-search-icon">⌕</span>
+        <input aria-label="Search frequently asked questions" id="faq-search"
+          placeholder="Search admissions, courses, registration..." type="search" />
+        <span class="search-hint">SEARCH</span>
+      </div>
+      <!-- CATEGORY FILTERS -->
+      <div aria-label="Filter questions" class="faq-categories" role="group">
+        <button class="faq-filter active" data-category="all" type="button">All questions</button>
+        <button class="faq-filter" data-category="admissions" type="button">Admissions</button>
+        <button class="faq-filter" data-category="courses" type="button">Courses</button>
+        <button class="faq-filter" data-category="applications" type="button">Applications</button>
+        <button class="faq-filter" data-category="campus" type="button">Campus life</button>
+        <button class="faq-filter" data-category="accounts" type="button">Accounts</button>
+      </div>
+      <div class="faq-content-grid">
+        <div class="faq-list" id="faq-accordion">
+          <article class="faq-item" data-category="admissions">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">01</span>
+              <span class="faq-question-text">How do I apply to Auroria University?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Start by exploring the available courses. When you are ready,
+                create an account through the registration page, sign in and
+                follow the instructions for the admission application.
+                Review the information you enter before submitting.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="admissions">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">02</span>
+              <span class="faq-question-text">What admission requirements do I need to meet?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Requirements can vary by programme and entry route.
+                Visit the Admissions page for the requirements presented
+                by Auroria University and check that you meet the criteria
+                for your chosen course before applying.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="courses">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">03</span>
+              <span class="faq-question-text">How can I find a course that suits me?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Open the Courses page to browse the available programmes.
+                Use the course search and department filters, where available,
+                to narrow the list. Read each course description and review
+                its entry requirements and estimated fees.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="courses">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">04</span>
+              <span class="faq-question-text">Where can I find course fees?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Check the Courses page and the relevant course details for
+                the estimated fees displayed on the website. Confirm any
+                final fee information with the university before making
+                financial decisions.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="applications">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">05</span>
+              <span class="faq-question-text">How do I submit an admission application?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Register for an account and sign in. Open the admission
+                application area, complete the requested fields, review
+                your details and submit the form. Follow any confirmation
+                displayed by the website.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="applications">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">06</span>
+              <span class="faq-question-text">How can I check my application information?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Sign in using the account associated with your application
+                and open your student dashboard or application information
+                page. The information available depends on the functionality
+                enabled on the website.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="applications">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">07</span>
+              <span class="faq-question-text">What if I have a problem with my application?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Check that you have completed the required fields and that
+                your information is correct. If the problem continues,
+                use the contact form below to describe the issue. Do not
+                include your password in a message.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="accounts">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">08</span>
+              <span class="faq-question-text">How do I create an account?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Select the registration option and complete the required
+                fields, including your name, email address, phone number
+                and password. Follow the website's validation instructions
+                and submit the form to create your account.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="accounts">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">09</span>
+              <span class="faq-question-text">What should I do if I cannot log in?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Check your email address and password, then try again.
+                If the website provides a password recovery feature,
+                follow its instructions. Otherwise, contact the university
+                through the enquiry form for assistance.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="campus">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">10</span>
+              <span class="faq-question-text">What can students do outside the classroom?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Explore the Campus Life page for information about student
+                communities, recreational activities, facilities, events
+                and opportunities to connect with other students.
+                Specific activities depend on what the university offers.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="campus">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">11</span>
+              <span class="faq-question-text">Where can I learn more about campus facilities?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Visit the Campus Life page to explore the facilities and
+                student experiences described on the website. For details
+                about a particular facility, use the contact form to make
+                an enquiry.
+              </p>
+            </div>
+          </article>
+          <article class="faq-item" data-category="admissions">
+            <button aria-expanded="false" class="faq-question" type="button">
+              <span class="faq-question-number">12</span>
+              <span class="faq-question-text">How can I contact the university for more information?</span>
+              <span class="faq-plus">+</span>
+            </button>
+            <div class="faq-answer" hidden="">
+              <p>
+                Use the contact section on this page to prepare an enquiry.
+                The university's actual email address, phone number and
+                physical address should be added to the contact details
+                once they have been confirmed.
+              </p>
+            </div>
+          </article>
+          <div class="faq-no-results" hidden="" id="faq-no-results">
+            <span>⌕</span>
+            <h3>No matching questions</h3>
+            <p>Try another search term or choose a different category.</p>
+            <button id="faq-reset" type="button">Show all questions</button>
+          </div>
+        </div>
+        <!-- SIDE CARD -->
+        <aside class="faq-help-card">
+          <div class="help-card-symbol">✳</div>
+          <span class="section-label">STILL NEED HELP?</span>
+          <h3>Let's get you<br />the right answer.</h3>
+          <p>
+            Can't find what you're looking for? Send us a message
+            with your question and the relevant details.
+          </p>
+          <a class="faq-help-button" href="#contact-us">Contact our team <span>↗</span></a>
+          <div class="help-card-bottom">
+            <span class="help-card-dot"></span>
+            <span>We're ready to hear from you.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+    <!-- CONTACT -->
+    <section class="faq-contact-section" id="contact-us">
+      <div class="contact-section-inner">
+        <div class="contact-copy">
+          <span class="faq-eyebrow"><span class="eyebrow-line"></span> GET IN TOUCH</span>
+          <h2>Let's start a<br /><span>conversation.</span></h2>
+          <p>
+            Have a question about admissions, courses or campus life?
+            Send us an enquiry. Include enough detail for your question
+            to be understood, but never send your password.
+          </p>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">✉</span>
+            <div>
+              <small>EMAIL</small>
+              <strong>University email address</strong>
+              <p>auroriauni@gmail.com.</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">⌕</span>
+            <div>
+              <small>PHONE</small>
+              <strong>University contact number</strong>
+              <p>+234 814-6540-949.</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">◷</span>
+            <div>
+              <small>OFFICE HOURS</small>
+              <strong>University office hours</strong>
+              <p>9am - 5am.</p>
+            </div>
+          </div>
+          <div class="contact-social-note">
+            <span class="social-line"></span>
+            <span>WE LOOK FORWARD TO HEARING FROM YOU</span>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <div class="form-heading">
+            <span class="section-label">SEND AN ENQUIRY</span>
+            <h3>How can we help?</h3>
+            <p>Fields marked with * are required.</p>
+          </div>
+          <form id="faq-contact-form">
+            <div class="form-row">
+              <div class="form-field">
+                <label for="contact-name">Full name *</label>
+                <input autocomplete="name" id="contact-name" name="name" placeholder="Your full name" required=""
+                  type="text" />
+              </div>
+              <div class="form-field">
+                <label for="contact-email">Email address *</label>
+                <input autocomplete="email" id="contact-email" name="email" placeholder="you@example.com" required=""
+                  type="email" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="contact-phone">Phone number *</label>
+                <input autocomplete="tel" id="contact-phone" name="phone" placeholder="+234 ..." required=""
+                  type="tel" />
+              </div>
+              <div class="form-field">
+                <label for="contact-topic">Enquiry topic *</label>
+                <select id="contact-topic" name="topic" required="">
+                  <option disabled="" selected="" value="">Select a topic</option>
+                  <option value="Admissions">Admissions</option>
+                  <option value="Courses and fees">Courses and fees</option>
+                  <option value="Application support">Application support</option>
+                  <option value="Account support">Account support</option>
+                  <option value="Campus life">Campus life</option>
+                  <option value="Other enquiry">Other enquiry</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="contact-subject">Subject *</label>
+              <input id="contact-subject" name="subject" placeholder="What is your question about?" required=""
+                type="text" />
+            </div>
+            <div class="form-field">
+              <label for="contact-message">Your message *</label>
+              <textarea id="contact-message" name="message" placeholder="Tell us how we can help..." required=""
+                rows="5"></textarea>
+            </div>
+            <label class="contact-consent">
+              <input id="contact-consent" required="" type="checkbox" />
+              <span>I confirm that the information provided is accurate and may be used to respond to my enquiry.</span>
+            </label>
+            <button class="contact-submit" type="submit">
+              Send enquiry <span>↗</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- LOCATION -->
+    <section class="faq-location section-space" id="visit-us">
+      <div class="location-copy">
+        <span class="section-label">COME SAY HELLO</span>
+        <h2>Find your way<br /><span>to Auroria.</span></h2>
+        <p>
+          Planning to visit? Add the university's verified address
+          and location below so visitors can find the correct campus.
+        </p>
+        <div class="location-address">
+          <span class="location-pin">⌖</span>
+          <div>
+            <strong>Campus address</strong>
+            <p>Insert the official Auroria University address here.</p>
+          </div>
+        </div>
+        <a class="location-contact-link" href="#contact-us">Ask about visiting <span>↗</span></a>
+      </div>
+      <div class="location-map">
+        <div class="map-placeholder">
+          <span class="map-pin-large">⌖</span>
+          <h3>Our campus location</h3>
+          <p>Add a map for the confirmed university address.</p>
+          <span class="map-placeholder-label">LOCATION TO BE CONFIRMED</span>
+        </div>
+      </div>
+    </section>
+    <!-- BOTTOM CTA -->
+    <section class="faq-bottom-cta">
+      <div class="bottom-cta-content">
+        <span class="faq-eyebrow">YOUR FUTURE STARTS WITH A QUESTION</span>
+        <h2>Ready for your next chapter?</h2>
+        <p>Explore your options and take the next step towards your future.</p>
+        <div class="bottom-cta-actions">
+          <a class="faq-primary-btn" href="courses.html">Explore courses <span>↗</span></a>
+          <a class="faq-light-btn" href="register.html">Create an account</a>
+        </div>
+      </div>
+      <div class="bottom-cta-decoration">A</div>
+    </section>
+  </main>
+  <!-- FOOTER -->
+  <footer class="faq-footer">
+    <div class="au-footer-identity"><img alt="Auroria University crest" class="au-footer-crest"
+        src="image/auroria-crest.png" /><span>AURORIA UNIVERSITY</span></div>
+    <div class="faq-footer-main">
+      <span class="faq-brand-mark"></span>
+      <span class="faq-brand-text">
+        <strong>AURORIA</strong>
+        <small>UNIVERSITY</small>
+      </span>
+
+      <p class="footer-description">
+        A place to discover your potential, develop new ideas and
+        build the future you imagine.
+      </p>
+      <div class="footer-links">
+        <div>
+          <strong>EXPLORE</strong>
+          <a href="index.html">Home</a>
+          <a href="about.html">About us</a>
+          <a href="courses.html">Courses</a>
+        </div>
+        <div>
+          <strong>YOUR JOURNEY</strong>
+          <a href="admissions.html">Admissions</a>
+          <a href="campus-life.html">Campus life</a>
+          <a href="register.html">Register</a>
+        </div>
+        <div>
+          <strong>NEED HELP?</strong>
+          <a href="#faq-list">FAQs</a>
+          <a href="#contact-us">Contact us</a>
+          <a href="#visit-us">Location</a>
+        </div>
+      </div>
+    </div>
+    <div class="faq-footer-bottom">
+      <span>© <span id="faq-year"></span> Auroria University.</span>
+      <span>LEARN · CONNECT · THRIVE</span>
+      <a href="#top" id="faq-back-top">Back to top ↑</a>
+    </div>
+  </footer>
+</body>
+
+</html>

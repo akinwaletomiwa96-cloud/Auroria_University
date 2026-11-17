@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Create Account | Auroria University</title>
+    <link href="auth.css" rel="stylesheet" />
+    <script defer src="app-config.js"></script>
+    <script defer="" src="auth.js"></script>
+    <link href="auroria-redesign.css" rel="stylesheet" />
+</head>
+
+<body>
+    <main class="auth-layout">
+        <section class="auth-brand">
+            <a class="brand-logo" href="index.html">
+               <img class="logo-mark" src="image/loggggg.png" alt="">
+                <span>AURORIA <small>UNIVERSITY</small></span>
+            </a>
+            <div class="brand-content">
+                <span class="eyebrow">YOUR FUTURE STARTS HERE</span>
+                <h1>It all starts with a <span>bold idea.</span></h1>
+                <p>
+                    Create your account and take the first step
+                    towards your future at Auroria University.
+                </p>
+            </div>
+            <p class="brand-footer">Learn with purpose. Lead with vision.</p>
+        </section>
+        <section class="auth-panel">
+            <div class="auth-card">
+                <a class="mobile-logo" href="index.html">
+                    <img class="logo-mark" src="/Auroria Uni/image/loggggg.png" alt="">
+                    <span>AURORIA <small>UNIVERSITY</small></span>
+                </a>
+                <div class="auth-heading">
+                    <span class="eyebrow">JOIN OUR COMMUNITY</span>
+                    <h2>Create your account</h2>
+                    <p>Enter your details to get started.</p>
+                </div>
+                <div aria-live="polite" class="notice" id="auth-notice" role="status"></div>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="full-name">Full name</label>
+                        <input autocomplete="name" id="full-name" maxlength="100" name="fullName"
+                            placeholder="Enter your full name" required="" type="text" />
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email address</label>
+                        <input autocomplete="email" id="register-email" maxlength="150" name="email"
+                            placeholder="you@example.com" required="" type="email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone number</label>
+                        <input autocomplete="tel" id="phone" maxlength="25" name="phone" placeholder="+234 800 000 0000"
+                            required="" type="tel" />
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <div class="password-wrap">
+                            <input autocomplete="new-password" id="register-password" minlength="8" name="password"
+                                placeholder="Create a strong password" required="" type="password" />
+                            <button aria-label="Show password" class="password-toggle" data-password="register-password"
+                                type="button">Show</button>
+                        </div>
+                        <span class="field-hint">
+                            At least 8 characters, including uppercase,
+                            lowercase, a number and a special character.
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm password</label>
+                        <div class="password-wrap">
+                            <input autocomplete="new-password" id="confirm-password" name="confirmPassword"
+                                placeholder="Enter your password again" required="" type="password" />
+                            <button aria-label="Show password" class="password-toggle" data-password="confirm-password"
+                                type="button">Show</button>
+                        </div>
+                    </div>
+                    <label class="checkbox-row">
+                        <input id="terms" required="" type="checkbox" />
+                        <span>I agree to the terms and privacy policy.</span>
+                    </label>
+                    <button class="primary-button" type="submit">
+                        Create account <span aria-hidden="true">↗</span>
+                    </button>
+                </form>
+                <p class="auth-switch">
+                    Already have an account?
+                    <a href="login.html">Sign in</a>
+                </p>
+                <a class="back-link" href="index.html">
+                    ← Back to website
+                </a>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

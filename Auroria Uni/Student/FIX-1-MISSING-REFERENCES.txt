@@ -1,0 +1,12 @@
+Auroria University — Fix 1: Missing file references
+
+Changes made:
+- Removed the missing app.js script reference from index.html.
+- Removed the missing style.css reference from about.html; about.css remains loaded.
+- Changed signup.html links to the existing register.html page.
+- Changed contact.html links to FAQ.html#contact-us (the existing enquiry form).
+- Changed Campus Life.html to campus-life.html.
+- Updated homepage CSS image paths to the supplied image/ assets.
+- Removed footer links to privacy.html and accessibility.html because those pages do not yet exist.
+
+No JavaScript business logic, API endpoints, Spring Boot integration, or database files were changed.

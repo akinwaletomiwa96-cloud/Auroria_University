@@ -1,0 +1,803 @@
+
+/* =========================================
+   AURORIA UNIVERSITY — CAMPUS LIFE
+   Navy / White / Gold
+========================================= */
+
+.campus-page {
+  --campus-navy: #101d3a;
+  --campus-blue: #193968;
+  --campus-gold: #d9ad59;
+  --campus-cream: #f7f5f0;
+  --campus-white: #ffffff;
+  --campus-muted: #667085;
+  color: var(--campus-navy);
+  background: var(--campus-white);
+  overflow: hidden;
+}
+
+.campus-page * {
+  box-sizing: border-box;
+}
+
+.campus-page img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.campus-page a {
+  text-decoration: none;
+}
+
+.campus-page p {
+  line-height: 1.85;
+}
+
+.campus-page h1,
+.campus-page h2,
+.campus-page h3,
+.campus-page p {
+  margin-top: 0;
+}
+
+.campus-page h1,
+.campus-page h2,
+.campus-page h3 {
+  letter-spacing: -0.035em;
+}
+
+.campus-page h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.12;
+  font-weight: 750;
+}
+
+.campus-page h2 span,
+.campus-page h1 span {
+  color: var(--campus-gold);
+}
+
+.campus-page .section-pad {
+  padding: 100px max(6%, calc((100% - 1320px) / 2));
+}
+
+.campus-page .campus-kicker,
+.campus-page .campus-eyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #a77a2b;
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .19em;
+}
+
+.campus-page .campus-hero {
+  min-height: 690px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background:
+    url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2200&q=90")
+    center 44% / cover no-repeat;
+  color: white;
+}
+
+.campus-page .campus-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 22, 47, .96) 0%,
+    rgba(10, 22, 47, .82) 43%,
+    rgba(10, 22, 47, .22) 100%
+  );
+}
+
+.campus-page .campus-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 790px;
+  padding: 100px 8%;
+}
+
+.campus-page .campus-eyebrow {
+  color: var(--campus-gold);
+}
+
+.campus-page .campus-hero h1 {
+  font-size: clamp(2.8rem, 6vw, 5.6rem);
+  line-height: 1.03;
+  margin-bottom: 25px;
+}
+
+.campus-page .campus-hero-content > p {
+  max-width: 640px;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,.84);
+  margin-bottom: 30px;
+}
+
+.campus-page .campus-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.campus-page .campus-btn {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 15px 23px;
+  font-weight: 750;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.campus-page .campus-btn:hover {
+  transform: translateY(-3px);
+}
+
+.campus-page .campus-btn-gold {
+  color: var(--campus-navy);
+  background: var(--campus-gold);
+}
+
+.campus-page .campus-btn-gold:hover {
+  background: #edc777;
+}
+
+.campus-page .campus-text-link {
+  color: white;
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+.campus-page .campus-hero-note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 45px;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  color: rgba(255,255,255,.78);
+}
+
+.campus-page .campus-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--campus-gold);
+}
+
+.campus-page .campus-hero-caption {
+  position: absolute;
+  z-index: 1;
+  right: 6%;
+  bottom: 24px;
+  left: 6%;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255,255,255,.7);
+  font-size: .67rem;
+  letter-spacing: .12em;
+}
+
+.campus-page .campus-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.campus-page .campus-intro-copy h2 span {
+  color: #ad8339;
+}
+
+.campus-page .campus-intro-description {
+  color: var(--campus-muted);
+}
+
+.campus-page .campus-inline-link {
+  display: inline-flex;
+  gap: 14px;
+  margin-top: 8px;
+  color: var(--campus-blue);
+  font-weight: 800;
+}
+
+.campus-page .campus-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 35px;
+  margin-bottom: 42px;
+}
+
+.campus-page .campus-section-heading h2 {
+  margin-bottom: 0;
+}
+
+.campus-page .campus-section-heading h2 span {
+  color: #ad8339;
+}
+
+.campus-page .campus-section-heading > p {
+  max-width: 420px;
+  color: var(--campus-muted);
+  margin-bottom: 5px;
+}
+
+.campus-page .campus-experiences {
+  background: var(--campus-cream);
+}
+
+.campus-page .campus-experience-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: repeat(2, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.campus-page .campus-experience-card {
+  min-height: 280px;
+  position: relative;
+  overflow: hidden;
+  background: var(--campus-navy);
+  color: white;
+}
+
+.campus-page .campus-card-large {
+  grid-row: span 2;
+  min-height: 580px;
+}
+
+.campus-page .campus-experience-card img {
+  position: absolute;
+  inset: 0;
+  transition: transform .6s ease;
+}
+
+.campus-page .campus-experience-card:hover img {
+  transform: scale(1.06);
+}
+
+.campus-page .campus-card-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(8, 18, 39, .95),
+    rgba(8, 18, 39, .04) 100%
+  );
+}
+
+.campus-page .campus-card-content {
+  position: absolute;
+  right: 28px;
+  bottom: 28px;
+  left: 28px;
+}
+
+.campus-page .campus-card-content > span,
+.campus-page .campus-event-content > span {
+  color: var(--campus-gold);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+
+.campus-page .campus-card-content h3 {
+  font-size: clamp(1.5rem, 2.5vw, 2.15rem);
+  margin: 13px 0 10px;
+}
+
+.campus-page .campus-card-content p {
+  max-width: 500px;
+  color: rgba(255,255,255,.8);
+  font-size: .9rem;
+}
+
+.campus-page .campus-card-content a {
+  color: white;
+  font-weight: 750;
+  font-size: .86rem;
+}
+
+.campus-page .campus-facility-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.campus-page .campus-facility-card {
+  border: 1px solid #e8eaf0;
+  background: white;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.campus-page .campus-facility-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 45px rgba(16,29,58,.09);
+}
+
+.campus-page .campus-facility-card > img {
+  height: 300px;
+}
+
+.campus-page .campus-facility-body {
+  padding: 28px;
+}
+
+.campus-page .campus-number {
+  color: #ad8339;
+  font-size: .76rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.campus-page .campus-facility-body h3 {
+  font-size: 1.45rem;
+  margin: 15px 0;
+}
+
+.campus-page .campus-facility-body p {
+  color: var(--campus-muted);
+  margin-bottom: 20px;
+}
+
+.campus-page .campus-facility-body a {
+  color: var(--campus-blue);
+  font-weight: 800;
+  font-size: .88rem;
+}
+
+.campus-page .campus-sports {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--campus-navy);
+  color: white;
+}
+
+.campus-page .campus-sports-image {
+  min-height: 650px;
+}
+
+.campus-page .campus-sports-copy {
+  padding: 85px clamp(30px, 6vw, 95px);
+  align-self: center;
+}
+
+.campus-page .campus-sports-copy h2 span {
+  color: var(--campus-gold);
+}
+
+.campus-page .campus-sports-copy > p {
+  color: rgba(255,255,255,.75);
+}
+
+.campus-page .campus-sport-list {
+  margin: 35px 0;
+}
+
+.campus-page .campus-sport-list > div {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,.15);
+}
+
+.campus-page .campus-sport-list > div > span {
+  color: var(--campus-gold);
+  font-weight: 850;
+}
+
+.campus-page .campus-sport-list p {
+  margin-bottom: 0;
+  color: rgba(255,255,255,.72);
+  font-size: .9rem;
+}
+
+.campus-page .campus-sport-list strong {
+  color: white;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.campus-page .campus-clubs {
+  background: var(--campus-cream);
+}
+
+.campus-page .campus-club-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.campus-page .campus-club-card {
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  background: white;
+  min-height: 270px;
+}
+
+.campus-page .campus-club-image {
+  min-height: 270px;
+  overflow: hidden;
+}
+
+.campus-page .campus-club-image img {
+  transition: transform .5s ease;
+}
+
+.campus-page .campus-club-card:hover img {
+  transform: scale(1.06);
+}
+
+.campus-page .campus-club-info {
+  padding: 25px;
+  align-self: center;
+}
+
+.campus-page .campus-club-info > span {
+  color: #ad8339;
+  font-size: .68rem;
+  font-weight: 850;
+  letter-spacing: .1em;
+}
+
+.campus-page .campus-club-info h3 {
+  font-size: 1.25rem;
+  margin: 13px 0;
+}
+
+.campus-page .campus-club-info p {
+  color: var(--campus-muted);
+  font-size: .88rem;
+  margin-bottom: 0;
+}
+
+.campus-page .campus-disclaimer,
+.campus-page .campus-gallery-note {
+  color: var(--campus-muted);
+  font-size: .8rem;
+  margin-top: 28px;
+}
+
+.campus-page .campus-events {
+  background: white;
+}
+
+.campus-page .campus-events-heading {
+  max-width: 730px;
+  margin-bottom: 42px;
+}
+
+.campus-page .campus-events-heading h2 span {
+  color: #ad8339;
+}
+
+.campus-page .campus-events-heading > p {
+  color: var(--campus-muted);
+}
+
+.campus-page .campus-event-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 25px;
+}
+
+.campus-page .campus-event-card {
+  border: 1px solid #e9eaf0;
+  background: white;
+}
+
+.campus-page .campus-event-card > img {
+  height: 280px;
+}
+
+.campus-page .campus-event-content {
+  padding: 25px;
+}
+
+.campus-page .campus-event-content h3 {
+  font-size: 1.35rem;
+  margin: 13px 0;
+}
+
+.campus-page .campus-event-content p {
+  color: var(--campus-muted);
+  margin-bottom: 0;
+  font-size: .92rem;
+}
+
+.campus-page .campus-wellbeing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--campus-cream);
+}
+
+.campus-page .campus-wellbeing-image {
+  min-height: 650px;
+}
+
+.campus-page .campus-wellbeing-copy {
+  padding: 80px clamp(30px, 6vw, 95px);
+  align-self: center;
+}
+
+.campus-page .campus-wellbeing-copy h2 span {
+  color: #ad8339;
+}
+
+.campus-page .campus-wellbeing-copy > p {
+  color: var(--campus-muted);
+}
+
+.campus-page .campus-support-item {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 18px;
+  margin-top: 28px;
+}
+
+.campus-page .campus-support-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--campus-navy);
+  color: var(--campus-gold);
+  font-weight: 850;
+}
+
+.campus-page .campus-support-item h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.campus-page .campus-support-item p {
+  color: var(--campus-muted);
+  font-size: .88rem;
+  margin-bottom: 0;
+}
+
+.campus-page .campus-photo-gallery {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  grid-auto-rows: 240px;
+  gap: 16px;
+}
+
+.campus-page .campus-photo {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--campus-navy);
+}
+
+.campus-page .campus-photo-tall {
+  grid-row: span 2;
+}
+
+.campus-page .campus-photo-wide {
+  grid-column: span 2;
+}
+
+.campus-page .campus-photo img {
+  transition: transform .6s ease;
+}
+
+.campus-page .campus-photo:hover img {
+  transform: scale(1.06);
+}
+
+.campus-page .campus-photo::after {
+  content: "";
+  position: absolute;
+  inset: 40% 0 0;
+  background: linear-gradient(transparent, rgba(8,18,39,.8));
+  pointer-events: none;
+}
+
+.campus-page .campus-photo figcaption {
+  position: absolute;
+  z-index: 1;
+  left: 20px;
+  bottom: 18px;
+  color: white;
+  font-weight: 750;
+  font-size: .9rem;
+}
+
+.campus-page .campus-cta {
+  position: relative;
+  padding: 100px 8%;
+  color: white;
+  background: var(--campus-navy);
+  overflow: hidden;
+}
+
+.campus-page .campus-cta-image {
+  position: absolute;
+  inset: 0 0 0 40%;
+  background:
+    linear-gradient(90deg, var(--campus-navy), rgba(16,29,58,.35)),
+    url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1800&q=85")
+    center / cover no-repeat;
+  opacity: .75;
+}
+
+.campus-page .campus-cta-content {
+  position: relative;
+  max-width: 780px;
+}
+
+.campus-page .campus-cta-content h2 span {
+  color: var(--campus-gold);
+}
+
+.campus-page .campus-cta-content > p {
+  max-width: 600px;
+  color: rgba(255,255,255,.78);
+  margin-bottom: 30px;
+}
+
+.campus-page .campus-btn-outline {
+  border: 1px solid rgba(255,255,255,.55);
+  color: white;
+}
+
+.campus-page .campus-btn-outline:hover {
+  background: rgba(255,255,255,.1);
+}
+
+/* TABLETS */
+@media (max-width: 1000px) {
+  .campus-page .section-pad {
+    padding: 75px 5%;
+  }
+
+  .campus-page .campus-club-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-page .campus-sports-copy,
+  .campus-page .campus-wellbeing-copy {
+    padding: 60px 35px;
+  }
+
+  .campus-page .campus-sports-image,
+  .campus-page .campus-wellbeing-image {
+    min-height: 500px;
+  }
+
+  .campus-page .campus-event-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+  .campus-page .section-pad {
+    padding: 60px 22px;
+  }
+
+  .campus-page .campus-hero {
+    min-height: 620px;
+    background-position: 58% center;
+  }
+
+  .campus-page .campus-hero-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(10,22,47,.94),
+      rgba(10,22,47,.55)
+    );
+  }
+
+  .campus-page .campus-hero-content {
+    padding: 80px 24px;
+  }
+
+  .campus-page .campus-hero h1 {
+    font-size: clamp(2.55rem, 12vw, 4rem);
+  }
+
+  .campus-page .campus-hero-caption {
+    font-size: .55rem;
+  }
+
+  .campus-page .campus-intro,
+  .campus-page .campus-sports,
+  .campus-page .campus-wellbeing {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-page .campus-intro {
+    gap: 15px;
+  }
+
+  .campus-page .campus-section-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .campus-page .campus-experience-grid,
+  .campus-page .campus-facility-grid,
+  .campus-page .campus-club-grid,
+  .campus-page .campus-event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-page .campus-card-large {
+    grid-row: auto;
+    min-height: 420px;
+  }
+
+  .campus-page .campus-experience-card {
+    min-height: 320px;
+  }
+
+  .campus-page .campus-facility-card > img {
+    height: 240px;
+  }
+
+  .campus-page .campus-club-card {
+    grid-template-columns: 1fr;
+  }
+
+  .campus-page .campus-club-image {
+    height: 220px;
+    min-height: 220px;
+  }
+
+  .campus-page .campus-sports-image,
+  .campus-page .campus-wellbeing-image {
+    min-height: 320px;
+  }
+
+  .campus-page .campus-sports-copy,
+  .campus-page .campus-wellbeing-copy {
+    padding: 55px 24px;
+  }
+
+  .campus-page .campus-photo-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: 180px;
+    gap: 10px;
+  }
+
+  .campus-page .campus-photo-tall {
+    grid-row: span 2;
+  }
+
+  .campus-page .campus-photo-wide {
+    grid-column: span 2;
+  }
+
+  .campus-page .campus-photo figcaption {
+    left: 12px;
+    bottom: 12px;
+    font-size: .78rem;
+  }
+
+  .campus-page .campus-cta {
+    padding: 75px 24px;
+  }
+
+  .campus-page .campus-cta-image {
+    left: 0;
+    opacity: .35;
+  }
+
+  .campus-page .campus-hero-actions {
+    align-items: flex-start;
+  }
+}

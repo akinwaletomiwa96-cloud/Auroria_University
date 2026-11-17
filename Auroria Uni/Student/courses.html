@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Courses | Auroria University</title>
+    <link href="courses.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="shared-navbar.css" rel="stylesheet" />
+    <link href="auroria-redesign.css" rel="stylesheet" />
+    <script defer src="shared-navbar.js"></script>
+</head>
+
+<body>
+    <header class="shared-site-header">
+        <a class="about-logo" href="index.html">
+            <img alt="Auroria University Logo" class="brand-logo" src="image/auroria-crest.png" />
+            <span>
+                <strong>AURORIA</strong>
+                <small>UNIVERSITY</small>
+            </span>
+        </a>
+        <button aria-controls="main-navigation" aria-expanded="false" aria-label="Open navigation menu"
+            class="shared-menu-toggle" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="about-nav" id="main-navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a class="active" aria-current="page" href="courses.html">Academics</a>
+            <a href="admissions.html">Admissions</a>
+            <a href="campus-life.html">Campus Life</a>
+            <a href="FAQ.html">FAQs &amp; Contact</a>
+        </nav>
+        <a class="about-nav-button" href="register.html">
+            Apply Now
+        </a>
+    </header>
+    <main>
+        <section class="courses-banner">
+            <div class="banner-content">
+                <span class="eyebrow">AURORIA UNIVERSITY · ACADEMICS</span>
+                <h1>Explore our <span>programmes.</span></h1>
+                <p>Find your course, explore your options, and take the next step towards your future.</p>
+                <div class="banner-stats">
+                    <div><strong>01</strong><span>Find a course</span></div>
+                    <div><strong>02</strong><span>Explore details</span></div>
+                    <div><strong>03</strong><span>Start your journey</span></div>
+                </div>
+            </div>
+        </section>
+        <section class="departments-section section-container">
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">FIND YOUR DIRECTION</span>
+                    <h2>Explore departments</h2>
+                    <p>Discover the academic departments and faculties at Auroria.</p>
+                </div>
+            </div>
+            <div class="department-list" id="departmentList">
+                <div class="loading-message">Loading departments...</div>
+            </div>
+        </section>
+        <section class="courses-section" id="courseExplorer">
+            <div class="section-container">
+                <div class="section-heading courses-heading">
+                    <div>
+                        <span class="eyebrow">YOUR ACADEMIC JOURNEY</span>
+                        <h2>Find your course</h2>
+                        <p>Search and filter programmes to find the right fit for you.</p>
+                    </div>
+                    <span class="result-count" id="resultCount">Loading courses...</span>
+                </div>
+                <div class="filter-panel">
+                    <div class="search-box">
+                        <span class="search-icon">⌕</span>
+                        <input aria-label="Search courses" id="courseSearch"
+                            placeholder="Search by course name or code..." type="search" />
+                    </div>
+                    <div class="filter-controls">
+                        <div class="filter-field">
+                            <label for="departmentFilter">Department</label>
+                            <select id="departmentFilter">
+                                <option value="">All Departments</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label for="levelFilter">Course Level</label>
+                            <select id="levelFilter">
+                                <option value="">All Levels</option>
+                            </select>
+                        </div>
+                        <div class="filter-field">
+                            <label for="availabilityFilter">Availability</label>
+                            <select id="availabilityFilter">
+                                <option value="">All Courses</option>
+                                <option value="true">Available</option>
+                                <option value="false">Unavailable</option>
+                            </select>
+                        </div>
+                        <button class="reset-button" id="resetFilters">Reset Filters ↺</button>
+                    </div>
+                </div>
+                <div class="course-grid" id="courseGrid">
+                    <div class="loading-message">Loading courses...</div>
+                </div>
+                <div class="empty-state" hidden="" id="emptyState">
+                    <div class="empty-icon">⌕</div>
+                    <h3>No courses found</h3>
+                    <p>Try another search term or adjust your filters.</p>
+                    <button class="primary-button" id="clearEmptyFilters">Clear Filters</button>
+                </div>
+                <div class="error-state" hidden="" id="errorState">
+                    <h3>Unable to load courses</h3>
+                    <p id="errorMessage">Please check your connection and try again.</p>
+                    <button class="primary-button" id="retryButton">Try Again</button>
+                </div>
+            </div>
+        </section>
+        <section class="cta-section">
+            <div class="cta-content">
+                <span class="eyebrow">TAKE THE NEXT STEP</span>
+                <h2>Your future starts<br />with a bold idea.</h2>
+                <p>Found a programme that interests you? Begin your journey at Auroria University.</p>
+                <a class="cta-button" href="register.html">Start Your Application <span>↗</span></a>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+      
+        <div class="footer-main">
+            <a class="brand footer-brand" href="index.html">
+                <img alt="Auroria University Logo" class="brand-logo" src="image/auroria-crest.png" />
+                <span><strong>AURORIA</strong><small>UNIVERSITY</small></span>
+            </a>
+            <p>Empowering minds. Inspiring futures.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="courses.html">Courses</a>
+                <a href="admissions.html">Admissions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© <span id="currentYear"></span> Auroria University. All rights reserved.</p>
+        </div>
+    </footer>
+    <script defer src="app-config.js"></script>
+    <script defer src="courses.js"></script>
+
+</body>
+
+</html>
