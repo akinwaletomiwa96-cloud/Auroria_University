@@ -1512,8 +1512,25 @@
     /* =====================================================
        OPEN OR DOWNLOAD APPLICANT DOCUMENT
     ===================================================== */
-
     async function openDocument(id, download = false) {
+        let previewWindow = null;
+        let objectUrl = null;
+
+        if (!download) {
+            previewWindow = window.open("about:blank", "_blank");
+
+            if (!previewWindow) {
+                notify(
+                    "Preview blocked. Allow pop-ups for this site and try again.",
+                    "error"
+                );
+                return;
+            }
+
+            previewWindow.document.body.innerHTML =
+                "<p style='font-family:Arial;padding:24px'>Loading document preview...</p>";
+        }
+
         try {
             const response = await fetch(
                 `${API_BASE}${ENDPOINTS.documentFile(id)}`,
@@ -1523,51 +1540,70 @@
             );
 
             if (!response.ok) {
-                const text = await response.text();
+                const contentType =
+                    response.headers.get("content-type") || "";
 
-                throw new Error(
-                    text || `Unable to retrieve document (${response.status}).`
-                );
+                let message = `Unable to retrieve document (${response.status}).`;
+
+                if (contentType.includes("application/json")) {
+                    const error = await response.json();
+                    message = error.message || error.error || message;
+                } else {
+                    const errorText = await response.text();
+                    if (errorText) message = errorText;
+                }
+
+                throw new Error(message);
             }
 
             const blob = await response.blob();
 
-            const objectUrl = URL.createObjectURL(blob);
+            objectUrl = URL.createObjectURL(blob);
 
-            const doc = asArray(
-                state.review?.documents
-            ).find(item =>
+            const doc = asArray(state.review?.documents).find(item =>
                 String(item.documentId) === String(id)
             );
 
             const fileName =
-                doc?.fileName ||
-                `application-document-${id}`;
-
-            const link = document.createElement("a");
-
-            link.href = objectUrl;
+                doc?.fileName || `application-document-${id}`;
 
             if (download) {
+                const link = document.createElement("a");
+
+                link.href = objectUrl;
                 link.download = fileName;
+
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+
+            } else if (previewWindow && !previewWindow.closed) {
+                previewWindow.location.href = objectUrl;
             } else {
-                link.target = "_blank";
-                link.rel = "noopener";
+                throw new Error("The preview window was closed.");
             }
 
-            document.body.appendChild(link);
-
-            link.click();
-
-            link.remove();
-
-            window.setTimeout(
-                () => URL.revokeObjectURL(objectUrl),
-                60000
-            );
+            window.setTimeout(() => {
+                if (objectUrl) {
+                    URL.revokeObjectURL(objectUrl);
+                }
+            }, 10 * 60 * 1000);
 
         } catch (error) {
-            notify(error.message, "error");
+            if (previewWindow && !previewWindow.closed) {
+                previewWindow.close();
+            }
+
+            if (objectUrl) {
+                URL.revokeObjectURL(objectUrl);
+            }
+
+            console.error("Document opening error:", error);
+
+            notify(
+                error.message || "An error occurred while opening the document.",
+                "error"
+            );
         }
     }
 
