@@ -16,8 +16,8 @@
     */
     const API = {
         overview: "/api/admin/overview",
-        students: null,
-        staff: null,
+        applicants: "/api/admin/applicants",
+        staff: "/api/admin/staff",
         admissions: null,
         applications: null,
         courses: null,
@@ -35,7 +35,7 @@
 
     const PAGE_TITLES = {
         overview: "Dashboard Overview",
-        students: "Student Management",
+        applicants: "Applicant Management",
         staff: "Staff Management",
         admissions: "Admissions Management",
         applications: "Applications",
@@ -53,7 +53,7 @@
 
     const PAGE_DESCRIPTIONS = {
         overview: "Monitor university activities, statistics and recent updates.",
-        students: "Manage student accounts, profiles and academic information.",
+        applicants: "Manage applicant accounts, profiles and application information.",
         staff: "Manage university employees, staff accounts and permissions.",
         admissions: "Oversee admissions operations and admission officers.",
         applications: "View and monitor submitted admission applications.",
@@ -265,16 +265,7 @@
     }
 
     function logout() {
-        const confirmed = window.confirm(
-            "Are you sure you want to sign out?"
-        );
 
-        if (!confirmed) return;
-
-        /*
-           Clear the known authentication storage keys.
-           Add any other keys used by your auth.js here.
-        */
 
         [
             "user",
@@ -283,13 +274,14 @@
             "user_id",
             "token",
             "authToken"
-        ].forEach(key => localStorage.removeItem(key));
+        ].forEach(key => {
+            localStorage.removeItem(key);
+        });
 
         sessionStorage.clear();
 
-        window.location.href = "../Login/login.html";
+        window.location.href = "../Student/login.html";
     }
-
     /* =====================================================
        API REQUEST HANDLER
     ===================================================== */
@@ -325,7 +317,6 @@
             `${API_BASE}${path}`,
             {
                 ...options,
-                credentials: "include",
                 headers
             }
         );
@@ -433,6 +424,16 @@
                 return;
             }
 
+            if (page === "applicants") {
+                await renderApplicantManagement();
+                return;
+            }
+
+            if (page === "staff") {
+                await renderStaffManagement();
+                return;
+            }
+
             if (page === "courses") {
                 await renderCourses();
                 return;
@@ -467,267 +468,413 @@
     ===================================================== */
 
 
+
     async function renderOverview() {
         const overview = await request(API.overview);
 
-        const metrics = [
+        const safeArray = value =>
+            Array.isArray(value) ? value : [];
+
+        const number = value =>
+            Number.isFinite(Number(value))
+                ? Number(value).toLocaleString("en-NG")
+                : "0";
+
+        const recentApplications =
+            safeArray(overview.recentApplications);
+
+        const recentRegistrations =
+            safeArray(overview.recentRegistrations);
+
+        const recentActivity =
+            safeArray(overview.recentActivity);
+
+        const primaryMetrics = [
             {
-                label: "Registered students",
-                value: overview.totalStudents,
+                label: "Registered Applicants",
+                value: overview.totalApplicants ?? overview.totalStudents,
                 icon: "♙",
-                note: "Applicant accounts"
+                description: "Applicant accounts",
             },
             {
-                label: "Staff members",
+                label: "Staff Members",
                 value: overview.totalStaff,
                 icon: "♧",
-                note: "University employees"
+                description: "University employees",
+                color: "blue"
             },
             {
-                label: "Total applications",
+                label: "Applications",
                 value: overview.totalApplications,
                 icon: "▤",
-                note: "Submitted applications"
+                description: "Total applications",
+                color: "purple"
             },
             {
-                label: "Pending applications",
+                label: "Pending Applications",
                 value: overview.pendingApplications,
                 icon: "◷",
-                note: "Awaiting a decision"
-            },
+                description: "Awaiting review",
+                color: "orange"
+            }
+        ];
+
+        const secondaryMetrics = [
             {
-                label: "Approved applications",
+                label: "Approved",
                 value: overview.approvedApplications,
-                icon: "✓",
-                note: "Successful applications"
+                color: "success"
             },
             {
-                label: "Rejected applications",
+                label: "Rejected",
                 value: overview.rejectedApplications,
-                icon: "✕",
-                note: "Unsuccessful applications"
+                color: "danger"
             },
             {
                 label: "Courses",
                 value: overview.totalCourses,
-                icon: "▣",
-                note: "University programmes"
+                color: "info"
             },
             {
                 label: "Departments",
                 value: overview.totalDepartments,
-                icon: "⌂",
-                note: "Academic departments"
+                color: "neutral"
             }
         ];
 
-        const cards = metrics.map(metric => `
-        <article class="stat-card">
-            <div class="stat-top">
-                <span class="stat-label">
-                    ${escapeHTML(metric.label)}
-                </span>
+        const metricCards = primaryMetrics.map(metric => `
+        <article class="overview-stat-card">
+            <div class="overview-stat-top">
+                <div>
+                    <span class="overview-stat-label">
+                        ${escapeHTML(metric.label)}
+                    </span>
 
-                <span class="stat-icon">
+                    <strong class="overview-stat-value">
+                        ${number(metric.value)}
+                    </strong>
+                </div>
+
+                <span class="overview-stat-icon ${metric.color}">
                     ${metric.icon}
                 </span>
             </div>
 
-            <strong class="stat-value">
-                ${Number(metric.value ?? 0).toLocaleString("en-NG")}
-            </strong>
-
-            <div class="stat-note">
-                ${escapeHTML(metric.note)}
+            <div class="overview-stat-description">
+                ${escapeHTML(metric.description)}
             </div>
         </article>
     `).join("");
 
-        const registrations = (overview.recentRegistrations || [])
-            .map(user => `
-            <div class="activity-item">
-                <div class="activity-icon">♙</div>
+        const secondaryCards = secondaryMetrics.map(metric => `
+        <div class="overview-mini-stat">
+            <div class="overview-mini-indicator ${metric.color}"></div>
 
-                <div class="activity-content">
-                    <strong>${escapeHTML(user.fullName)}</strong>
-                    <p>${escapeHTML(user.email)}</p>
-                    <span>${formatDate(user.registeredAt)}</span>
-                </div>
+            <div>
+                <span>${escapeHTML(metric.label)}</span>
+                <strong>${number(metric.value)}</strong>
             </div>
-        `).join("");
+        </div>
+    `).join("");
 
-        const activity = (overview.recentActivity || [])
-            .map(item => `
-            <div class="activity-item">
-                <div class="activity-icon">▤</div>
+        const applicationRows = recentApplications.map(application => `
+        <tr>
+            <td>
+                <div class="overview-applicant">
+                    <span class="overview-small-avatar">
+                        ${escapeHTML(
+            getInitials(application.applicantName)
+        )}
+                    </span>
 
-                <div class="activity-content">
-                    <strong>${escapeHTML(item.title)}</strong>
-                    <p>${escapeHTML(item.description)}</p>
-                    <span>${formatDate(item.createdAt)}</span>
+                    <div>
+                        <strong>
+                            ${escapeHTML(
+            application.applicantName || "Unknown applicant"
+        )}
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+            application.referenceCode || "No reference"
+        )}
+                        </span>
+                    </div>
                 </div>
+            </td>
+
+            <td>
+                ${escapeHTML(application.courseName || "—")}
+            </td>
+
+            <td>
+                ${statusBadge(application.applicationStatus)}
+            </td>
+
+            <td>
+                ${formatDate(application.submittedAt)}
+            </td>
+        </tr>
+    `).join("");
+
+        const registrationItems = recentRegistrations.map(user => `
+        <div class="overview-registration">
+            <span class="overview-small-avatar">
+                ${escapeHTML(getInitials(user.fullName))}
+            </span>
+
+            <div class="overview-registration-info">
+                <strong>
+                    ${escapeHTML(user.fullName || "Unknown user")}
+                </strong>
+
+                <span>
+                    ${escapeHTML(user.email || "No email available")}
+                </span>
             </div>
-        `).join("");
 
-        const applications = (overview.recentApplications || [])
-            .map(application => `
-            <tr>
-                <td>
-                    <strong>
-                        ${escapeHTML(application.applicantName)}
-                    </strong>
-                </td>
+            <time>
+                ${formatDate(user.createdAt)}
+            </time>
+        </div>
+    `).join("");
 
-                <td>
-                    ${escapeHTML(application.referenceCode)}
-                </td>
+        const activityItems = recentActivity.map(item => `
+        <div class="overview-timeline-item">
+            <span class="overview-timeline-icon">•</span>
 
-                <td>
-                    ${escapeHTML(application.courseName)}
-                </td>
+            <div class="overview-timeline-content">
+                <strong>
+                    ${escapeHTML(item.title || "University activity")}
+                </strong>
 
-                <td>
-                    ${statusBadge(application.applicationStatus)}
-                </td>
+                <p>
+                    ${escapeHTML(item.description || "")}
+                </p>
 
-                <td>
-                    ${formatDate(application.submittedAt)}
-                </td>
-            </tr>
-        `).join("");
+                <time>
+                    ${formatDate(item.date)}
+                </time>
+            </div>
+        </div>
+    `).join("");
+
+        const currentDate = new Date().toLocaleDateString("en-GB", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
 
         pageContent.innerHTML = `
-        <section class="page-heading">
-            <div>
-                <span class="eyebrow">
-                    UNIVERSITY ADMINISTRATION
+        <section class="overview-welcome">
+            <div class="overview-welcome-content">
+                <span class="overview-welcome-label">
+                    AURORIA UNIVERSITY
                 </span>
 
                 <h2>
                     Welcome back,
-                    ${escapeHTML($("#headerName")?.textContent || "Administrator")}
+                    ${escapeHTML(
+            $("#headerName")?.textContent || "Administrator"
+        )}
                 </h2>
 
                 <p>
-                    Monitor university operations and
-                    administrative activities.
+                    Here's what's happening across your university today.
+                    Stay informed and keep operations running smoothly.
                 </p>
+
+                <div class="overview-welcome-date">
+                    <span>◷</span>
+                    ${escapeHTML(currentDate)}
+                </div>
             </div>
 
-            <button class="btn-secondary"
-                data-action="refresh-page">
-                ↻ Refresh
-            </button>
+            <div class="overview-welcome-actions">
+                <button class="overview-refresh-button"
+                    data-action="refresh-page">
+                    ↻ Refresh dashboard
+                </button>
+            </div>
+
+            <div class="overview-decoration overview-decoration-one"></div>
+            <div class="overview-decoration overview-decoration-two"></div>
         </section>
 
-        <section class="stats-grid">
-            ${cards}
+        <section class="overview-section">
+            <div class="overview-section-heading">
+                <div>
+                    <span class="eyebrow">AT A GLANCE</span>
+                    <h3>University overview</h3>
+                </div>
+            </div>
+
+            <div class="overview-stats-grid">
+                ${metricCards}
+            </div>
         </section>
 
-        <section class="content-grid">
+        <section class="overview-section">
+            <div class="overview-section-heading">
+                <div>
+                    <span class="eyebrow">APPLICATION PERFORMANCE</span>
+                    <h3>Admissions summary</h3>
+                </div>
 
-            <div class="card">
-                <div class="card-header">
+                <button class="btn-secondary"
+                    data-page="applications">
+                    View applications →
+                </button>
+            </div>
+
+            <div class="overview-secondary-grid">
+                ${secondaryCards}
+
+                <div class="overview-mini-stat">
+                    <div class="overview-mini-indicator warning"></div>
+
                     <div>
-                        <h3>Recent university activity</h3>
-                        <p>Latest activity across the university</p>
+                        <span>Draft applications</span>
+                        <strong>${number(overview.draftApplications)}</strong>
                     </div>
                 </div>
 
-                <div class="activity-list">
-                    ${activity || `
-                        <div class="empty-state">
-                            No recent activity available.
-                        </div>
-                    `}
-                </div>
-            </div>
+                <div class="overview-mini-stat">
+                    <div class="overview-mini-indicator info"></div>
 
-            <div class="card">
-                <div class="card-header">
                     <div>
-                        <h3>Quick actions</h3>
-                        <p>Frequently used administration sections</p>
+                        <span>Pending documents</span>
+                        <strong>${number(overview.pendingDocuments)}</strong>
                     </div>
                 </div>
 
-                <div class="quick-actions">
-                    <button class="btn-secondary"
-                        data-page="students">
-                        ♙ Manage students
-                    </button>
+                <div class="overview-mini-stat">
+                    <div class="overview-mini-indicator purple"></div>
 
-                    <button class="btn-secondary"
-                        data-page="staff">
-                        ♧ Manage staff
-                    </button>
+                    <div>
+                        <span>New enquiries</span>
+                        <strong>${number(overview.newEnquiries)}</strong>
+                    </div>
+                </div>
 
-                    <button class="btn-secondary"
-                        data-page="applications">
-                        ▤ View applications
-                    </button>
+                <div class="overview-mini-stat">
+                    <div class="overview-mini-indicator neutral"></div>
 
-                    <button class="btn-secondary"
-                        data-page="courses">
-                        ▣ Manage courses
-                    </button>
+                    <div>
+                        <span>Admissions officers</span>
+                        <strong>${number(overview.totalAdmissionsOfficers)}</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="overview-section">
+            <div class="overview-section-heading">
+                <div>
+                    <span class="eyebrow">UNIVERSITY OPERATIONS</span>
+                    <h3>Management centre</h3>
+                    <p>Quick access to frequently used administration tools.</p>
                 </div>
             </div>
 
+            <div class="overview-quick-grid">
+
+                <button class="overview-quick-card" data-page="applicants">
+    <span class="overview-quick-icon green">♙</span>
+    <span>
+        <strong>Applicants</strong>
+        <small>Manage applicant accounts</small>
+    </span>
+    <span class="overview-quick-arrow">→</span>
+</button>
+
+                <button class="overview-quick-card" data-page="staff">
+                    <span class="overview-quick-icon blue">♧</span>
+                    <span>
+                        <strong>Staff management</strong>
+                        <small>Manage university personnel</small>
+                    </span>
+                    <span class="overview-quick-arrow">→</span>
+                </button>
+
+                <button class="overview-quick-card" data-page="applications">
+                    <span class="overview-quick-icon purple">▤</span>
+                    <span>
+                        <strong>Applications</strong>
+                        <small>Monitor admission applications</small>
+                    </span>
+                    <span class="overview-quick-arrow">→</span>
+                </button>
+
+                <button class="overview-quick-card" data-page="courses">
+                    <span class="overview-quick-icon orange">▣</span>
+                    <span>
+                        <strong>Courses & departments</strong>
+                        <small>Manage academic programmes</small>
+                    </span>
+                    <span class="overview-quick-arrow">→</span>
+                </button>
+
+            </div>
         </section>
 
-        <section class="two-column-grid">
+        <section class="overview-bottom-grid">
 
-            <div class="card">
-                <div class="card-header">
+            <div class="card overview-panel">
+                <div class="overview-panel-heading">
                     <div>
+                        <span class="eyebrow">LATEST SUBMISSIONS</span>
                         <h3>Recent applications</h3>
-                        <p>Latest submitted applications</p>
+                        <p>Recently submitted admission applications.</p>
                     </div>
 
-                    <button class="btn-secondary"
+                    <button class="overview-text-button"
                         data-page="applications">
-                        View all
+                        View all →
                     </button>
                 </div>
 
-                ${applications ? `
+                ${applicationRows ? `
                     <div class="table-wrapper">
-                        <table class="data-table">
+                        <table class="data-table overview-table">
                             <thead>
                                 <tr>
                                     <th>Applicant</th>
-                                    <th>Reference</th>
-                                    <th>Course</th>
+                                    <th>Programme</th>
                                     <th>Status</th>
                                     <th>Submitted</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                ${applications}
+                                ${applicationRows}
                             </tbody>
                         </table>
                     </div>
                 ` : `
                     <div class="empty-state">
-                        No submitted applications found.
+                        <div class="empty-icon">▤</div>
+                        <strong>No recent applications</strong>
+                        Submitted applications will appear here.
                     </div>
                 `}
             </div>
 
-            <div class="card">
-                <div class="card-header">
+            <div class="card overview-panel">
+                <div class="overview-panel-heading">
                     <div>
-                        <h3>Recent registrations</h3>
-                        <p>New student accounts</p>
+                        <span class="eyebrow">LATEST ACTIVITY</span>
+                        <h3>University activity</h3>
+                        <p>Recent administrative updates.</p>
                     </div>
                 </div>
 
-                <div class="activity-list">
-                    ${registrations || `
+                <div class="overview-timeline">
+                    ${activityItems || `
                         <div class="empty-state">
-                            No recent registrations found.
+                            <strong>No recent activity</strong>
+                            University activity will appear here.
                         </div>
                     `}
                 </div>
@@ -735,59 +882,767 @@
 
         </section>
 
-        <section class="card">
-            <div class="card-header">
+        <section class="card overview-registrations-panel">
+            <div class="overview-panel-heading">
                 <div>
-                    <h3>Additional statistics</h3>
-                    <p>Other university operations requiring attention</p>
+                    <span class="eyebrow">NEW ACCOUNTS</span>
+<h3>Recent applicant registrations</h3>
+<p>Latest applicants who created university accounts.</p>
                 </div>
+
+                <button class="overview-text-button" data-page="applicants">
+    Manage applicants →
+</button>
             </div>
 
-            <div class="stats-grid">
-                <article class="stat-card">
-                    <span class="stat-label">Draft applications</span>
-                    <strong class="stat-value">
-                        ${Number(overview.draftApplications ?? 0).toLocaleString("en-NG")}
-                    </strong>
-                </article>
-
-                <article class="stat-card">
-                    <span class="stat-label">Pending documents</span>
-                    <strong class="stat-value">
-                        ${Number(overview.pendingDocuments ?? 0).toLocaleString("en-NG")}
-                    </strong>
-                </article>
-
-                <article class="stat-card">
-                    <span class="stat-label">New enquiries</span>
-                    <strong class="stat-value">
-                        ${Number(overview.newEnquiries ?? 0).toLocaleString("en-NG")}
-                    </strong>
-                </article>
-
-                <article class="stat-card">
-                    <span class="stat-label">Admissions officers</span>
-                    <strong class="stat-value">
-                        ${Number(overview.totalAdmissionsOfficers ?? 0).toLocaleString("en-NG")}
-                    </strong>
-                </article>
+            <div class="overview-registration-list">
+                ${registrationItems || `
+                    <div class="empty-state">
+                        <strong>No recent registrations</strong>
+                        New student accounts will appear here.
+                    </div>
+                `}
             </div>
         </section>
     `;
     }
 
+    async function renderApplicantManagement(page = 0) {
+        const search = $("#applicantSearch")?.value || "";
+        const status = $("#applicantStatusFilter")?.value || "all";
+
+        pageContent.innerHTML = `
+        <div class="loading-state">Loading applicant records...</div>
+    `;
+
+        const query = new URLSearchParams({
+            search,
+            status,
+            page: String(page),
+            size: "10"
+        });
+
+        const result = await request(
+            `${API.applicants}?${query.toString()}`
+        );
+
+        // Accept common Spring Boot response formats.
+        const applicants = Array.isArray(result)
+            ? result
+            : Array.isArray(result.applicants)
+                ? result.applicants
+                : Array.isArray(result.content)
+                    ? result.content
+                    : Array.isArray(result.data)
+                        ? result.data
+                        : Array.isArray(result.items)
+                            ? result.items
+                            : [];
+
+        const stats = result.statistics || {};
+
+        state.currentData = applicants;
+
+        const totalPages = Number(result.totalPages ?? 0);
+        const currentPage = Number(result.page ?? result.number ?? page);
+        const totalElements = Number(
+            result.totalElements ?? result.total ?? applicants.length
+        );
+
+        const statCards = [
+            {
+                label: "Total applicants",
+                value: stats.totalApplicants ?? stats.total ?? totalElements,
+                icon: "♙",
+                color: "green"
+            },
+            {
+                label: "Active accounts",
+                value: stats.activeApplicants ?? stats.active ?? 0,
+                icon: "✓",
+                color: "blue"
+            },
+            {
+                label: "Inactive accounts",
+                value: stats.inactiveApplicants ?? stats.inactive ?? 0,
+                icon: "◷",
+                color: "orange"
+            },
+            {
+                label: "Unverified emails",
+                value: stats.unverifiedApplicants ?? stats.unverified ?? 0,
+                icon: "✉",
+                color: "purple"
+            }
+        ];
+
+        const statHTML = statCards.map(card => `
+        <article class="overview-stat-card applicant-stat-card">
+            <div class="overview-stat-top">
+                <div>
+                    <span class="overview-stat-label">
+                        ${escapeHTML(card.label)}
+                    </span>
+                    <strong class="overview-stat-value">
+                        ${Number(card.value || 0).toLocaleString("en-NG")}
+                    </strong>
+                </div>
+                <span class="overview-stat-icon ${card.color}">
+                    ${card.icon}
+                </span>
+            </div>
+        </article>
+    `).join("");
+
+        const rows = applicants.map(applicant => {
+            const id = applicant.userId ?? applicant.id;
+
+            return `
+            <tr>
+                <td>
+                    <div class="overview-applicant">
+                        <span class="overview-small-avatar">
+                            ${escapeHTML(getInitials(applicant.fullName))}
+                        </span>
+                        <div>
+                            <strong>
+                                ${escapeHTML(applicant.fullName || "Unnamed applicant")}
+                            </strong>
+                            <span>
+                                Applicant #${escapeHTML(id ?? "—")}
+                            </span>
+                        </div>
+                    </div>
+                </td>
+
+                <td>
+                    <div class="applicant-contact-cell">
+                        <strong>${escapeHTML(applicant.email || "—")}</strong>
+                        <span>${escapeHTML(applicant.phone || "No phone number")}</span>
+                    </div>
+                </td>
+
+                <td>${statusBadge(applicant.accountStatus)}</td>
+
+                <td>
+                    ${applicant.emailVerified
+                    ? '<span class="applicant-verification verified">Verified</span>'
+                    : '<span class="applicant-verification unverified">Not verified</span>'
+                }
+                </td>
+
+                <td>${formatDate(applicant.createdAt)}</td>
+
+                <td>
+                    <button
+                        class="btn-secondary"
+                        data-action="view-applicant"
+                        data-applicant-id="${escapeHTML(id ?? "")}">
+                        View profile
+                    </button>
+                </td>
+            </tr>
+        `;
+        }).join("");
+
+        pageContent.innerHTML = `
+        <div class="applicant-management">
+
+            <section class="page-heading applicant-page-heading">
+                <div>
+                    <span class="eyebrow">APPLICANT ADMINISTRATION</span>
+                    <h2>Applicant Management</h2>
+                    <p>
+                        View applicant accounts, monitor registration
+                        details and inspect personal profiles.
+                    </p>
+                </div>
+
+                <button class="btn-secondary" data-action="refresh-page">
+                    ↻ Refresh
+                </button>
+            </section>
+
+            <section class="applicant-stat-grid">
+                ${statHTML}
+            </section>
+
+            <section class="card applicant-management-panel">
+
+                <div class="applicant-panel-heading">
+                    <div>
+                        <span class="eyebrow">APPLICANT DIRECTORY</span>
+                        <h3>All applicants</h3>
+                        <p>
+                            ${totalElements.toLocaleString("en-NG")}
+                            matching applicant records
+                        </p>
+                    </div>
+                </div>
+
+                <div class="applicant-toolbar">
+
+                    <div class="applicant-search">
+                        <span>⌕</span>
+                        <input
+                            type="search"
+                            id="applicantSearch"
+                            placeholder="Search name, email, phone or applicant ID..."
+                            value="${escapeHTML(search)}"
+                        >
+                    </div>
+
+                    <div class="applicant-filters">
+                        <select id="applicantStatusFilter">
+                            <option value="all" ${status === "all" ? "selected" : ""}>
+                                All statuses
+                            </option>
+                            <option value="active" ${status === "active" ? "selected" : ""}>
+                                Active
+                            </option>
+                            <option value="inactive" ${status === "inactive" ? "selected" : ""}>
+                                Inactive
+                            </option>
+                            <option value="suspended" ${status === "suspended" ? "selected" : ""}>
+                                Suspended
+                            </option>
+                        </select>
+
+                        <button class="btn-primary" data-action="search-applicants">
+                            Apply filters
+                        </button>
+                    </div>
+                </div>
+
+                ${applicants.length ? `
+                    <div class="table-wrapper">
+                        <table class="data-table applicant-management-table">
+                            <thead>
+                                <tr>
+                                    <th>Applicant</th>
+                                    <th>Contact information</th>
+                                    <th>Account status</th>
+                                    <th>Email verification</th>
+                                    <th>Registered</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>${rows}</tbody>
+                        </table>
+                    </div>
+                ` : `
+                    <div class="empty-state">
+                        <div class="empty-icon">♙</div>
+                        <strong>No applicants found</strong>
+                        Try changing your search or status filter.
+                    </div>
+                `}
+
+                <div class="applicant-pagination">
+                    <span>
+                        Page ${totalPages ? currentPage + 1 : 0}
+                        of ${totalPages}
+                    </span>
+
+                    <div>
+                        <button
+                            class="btn-secondary"
+                            data-action="applicant-page"
+                            data-page-number="${currentPage - 1}"
+                            ${currentPage <= 0 ? "disabled" : ""}>
+                            Previous
+                        </button>
+
+                        <button
+                            class="btn-secondary"
+                            data-action="applicant-page"
+                            data-page-number="${currentPage + 1}"
+                            ${currentPage + 1 >= totalPages ? "disabled" : ""}>
+                            Next
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    `;
+    }
+
+
+    async function viewApplicantDetails(userId) {
+        const result = await request(
+            `${API.applicants}/${encodeURIComponent(userId)}`
+        );
+
+        const applicant =
+            result.applicant ||
+            result.user ||
+            result.data?.applicant ||
+            result.data?.user ||
+            result.data ||
+            {};
+
+        const profile = result.profile || result.data?.profile || {};
+
+        const details = [
+            ["Applicant ID", applicant.userId ?? applicant.id],
+            ["Full name", applicant.fullName],
+            ["Email address", applicant.email],
+            ["Phone number", applicant.phone],
+            ["Account status", applicant.accountStatus],
+            ["Email verified", applicant.emailVerified ? "Yes" : "No"],
+            ["Registration date", formatDate(applicant.createdAt)],
+            ["Last updated", formatDate(applicant.updatedAt)]
+        ];
+
+        const profileDetails = [
+            ["Date of birth", formatDate(profile.dateOfBirth)],
+            ["Nationality", profile.nationality],
+            ["State of origin", profile.stateOfOrigin],
+            ["Emergency contact", profile.emergencyContact],
+            ["Address", profile.address]
+        ];
+
+        const detailRows = items => items.map(([label, value]) => `
+        <div class="detail-item">
+            <span>${escapeHTML(label)}</span>
+            <strong>${escapeHTML(value ?? "Not provided")}</strong>
+        </div>
+    `).join("");
+
+        openDetail(
+            "Applicant profile",
+            `
+            <div class="applicant-detail-profile">
+                <span class="overview-small-avatar">
+                    ${escapeHTML(getInitials(applicant.fullName))}
+                </span>
+
+                <div>
+                    <strong>
+                        ${escapeHTML(applicant.fullName || "Applicant")}
+                    </strong>
+                    <span>
+                        Applicant #${escapeHTML(applicant.userId ?? applicant.id ?? "—")}
+                    </span>
+                </div>
+            </div>
+
+            <h4 class="applicant-detail-heading">Account information</h4>
+            <div class="detail-list">
+                ${detailRows(details)}
+            </div>
+
+            <h4 class="applicant-detail-heading">Personal information</h4>
+            <div class="detail-list">
+                ${detailRows(profileDetails)}
+            </div>
+        `
+        );
+    }
+
+    async function viewStudentDetails(userId) {
+        const result = await request(
+            `${API.students}/${encodeURIComponent(userId)}`
+        );
+
+        const student = result.student || {};
+        const profile = result.profile || {};
+
+        const details = [
+            ["Student ID", student.userId],
+            ["Full name", student.fullName],
+            ["Email address", student.email],
+            ["Phone number", student.phone],
+            ["Account status", student.accountStatus],
+            ["Email verified", student.emailVerified ? "Yes" : "No"],
+            ["Registration date", formatDate(student.createdAt)],
+            ["Last updated", formatDate(student.updatedAt)]
+        ];
+
+        const profileDetails = [
+            ["Date of birth", formatDate(profile.dateOfBirth)],
+            ["Nationality", profile.nationality],
+            ["State of origin", profile.stateOfOrigin],
+            ["Emergency contact", profile.emergencyContact],
+            ["Address", profile.address]
+        ];
+
+        const detailRows = items => items.map(([label, value]) => `
+        <div class="detail-item">
+            <span>${escapeHTML(label)}</span>
+            <strong>${escapeHTML(value ?? "Not provided")}</strong>
+        </div>
+    `).join("");
+
+        openDetail(
+            "Student profile",
+            `
+            <div class="student-detail-profile">
+                <span class="overview-small-avatar">
+                    ${escapeHTML(getInitials(student.fullName))}
+                </span>
+
+                <div>
+                    <strong>${escapeHTML(student.fullName || "Student")}</strong>
+                    <span>Student #${escapeHTML(student.userId)}</span>
+                </div>
+            </div>
+
+            <h4 class="student-detail-heading">Account information</h4>
+            <div class="detail-list">
+                ${detailRows(details)}
+            </div>
+
+            <h4 class="student-detail-heading">Personal information</h4>
+            <div class="detail-list">
+                ${detailRows(profileDetails)}
+            </div>
+        `
+        );
+    }
+
+    /* =====================================================
+       STAFF MANAGEMENT
+    ===================================================== */
+
+    async function renderStaffManagement(page = 0) {
+        const search = $("#staffSearch")?.value || "";
+        const status = $("#staffStatusFilter")?.value || "all";
+
+        pageContent.innerHTML = `
+        <div class="loading-state">Loading staff records...</div>
+    `;
+
+        const query = new URLSearchParams({
+            search,
+            status,
+            page: String(page),
+            size: "10"
+        });
+
+        const result = await request(
+            `${API.staff}?${query.toString()}`
+        );
+
+        const staff = Array.isArray(result.staff)
+            ? result.staff
+            : [];
+
+        const stats = result.statistics || {};
+
+        state.currentData = staff;
+
+        const totalPages = Number(result.totalPages || 0);
+        const currentPage = Number(result.page ?? page);
+        const totalElements = Number(
+            result.totalElements ?? staff.length
+        );
+
+        const statCards = [
+            {
+                label: "Total staff",
+                value: stats.totalStaff ?? totalElements,
+                icon: "♧",
+                color: "green"
+            },
+            {
+                label: "Active accounts",
+                value: stats.activeStaff ?? 0,
+                icon: "✓",
+                color: "blue"
+            },
+            {
+                label: "Inactive accounts",
+                value: stats.inactiveStaff ?? 0,
+                icon: "◷",
+                color: "orange"
+            },
+            {
+                label: "Unverified emails",
+                value: stats.unverifiedStaff ?? 0,
+                icon: "✉",
+                color: "purple"
+            }
+        ];
+
+        const statHTML = statCards.map(card => `
+        <article class="overview-stat-card applicant-stat-card">
+            <div class="overview-stat-top">
+                <div>
+                    <span class="overview-stat-label">
+                        ${escapeHTML(card.label)}
+                    </span>
+
+                    <strong class="overview-stat-value">
+                        ${Number(card.value || 0).toLocaleString("en-NG")}
+                    </strong>
+                </div>
+
+                <span class="overview-stat-icon ${card.color}">
+                    ${card.icon}
+                </span>
+            </div>
+        </article>
+    `).join("");
+
+        const rows = staff.map(member => `
+        <tr>
+            <td>
+                <div class="overview-applicant">
+                    <span class="overview-small-avatar">
+                        ${escapeHTML(getInitials(member.fullName))}
+                    </span>
+
+                    <div>
+                        <strong>
+                            ${escapeHTML(member.fullName || "Unnamed staff member")}
+                        </strong>
+                        <span>
+                            Staff #${escapeHTML(member.userId ?? "—")}
+                        </span>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <div class="applicant-contact-cell">
+                    <strong>${escapeHTML(member.email || "—")}</strong>
+                    <span>${escapeHTML(member.phone || "No phone number")}</span>
+                </div>
+            </td>
+
+            <td>
+                ${statusBadge(member.role)}
+            </td>
+
+            <td>
+                ${statusBadge(member.accountStatus)}
+            </td>
+
+            <td>
+                ${member.emailVerified
+                ? '<span class="applicant-verification verified">Verified</span>'
+                : '<span class="applicant-verification unverified">Not verified</span>'
+            }
+            </td>
+
+            <td>${formatDate(member.createdAt)}</td>
+
+            <td>
+                <button
+                    class="btn-secondary"
+                    data-action="view-staff"
+                    data-staff-id="${escapeHTML(member.userId ?? "")}">
+                    View profile
+                </button>
+            </td>
+        </tr>
+    `).join("");
+
+        pageContent.innerHTML = `
+        <div class="applicant-management">
+
+            <section class="page-heading applicant-page-heading">
+                <div>
+                    <span class="eyebrow">UNIVERSITY PERSONNEL</span>
+                    <h2>Staff Management</h2>
+                    <p>
+                        View staff accounts, inspect employee information
+                        and monitor account status and permissions.
+                    </p>
+                </div>
+<button class="btn-primary" data-action="create-staff">
+    + Add Admissions Officer
+</button>
+                <button class="btn-secondary" data-action="refresh-page">
+                    ↻ Refresh
+                </button>
+            </section>
+
+            <section class="applicant-stat-grid">
+                ${statHTML}
+            </section>
+
+            <section class="card applicant-management-panel">
+
+                <div class="applicant-panel-heading">
+                    <div>
+                        <span class="eyebrow">STAFF DIRECTORY</span>
+                        <h3>All staff members</h3>
+                        <p>
+                            ${totalElements.toLocaleString("en-NG")}
+                            matching staff accounts
+                        </p>
+                    </div>
+                </div>
+
+                <div class="applicant-toolbar">
+
+                    <div class="applicant-search">
+                        <span>⌕</span>
+                        <input
+                            type="search"
+                            id="staffSearch"
+                            placeholder="Search name, email, phone, role or staff ID..."
+                            value="${escapeHTML(search)}">
+                    </div>
+
+                    <div class="applicant-filters">
+                        <select id="staffStatusFilter">
+                            <option value="all" ${status === "all" ? "selected" : ""}>
+                                All statuses
+                            </option>
+                            <option value="active" ${status === "active" ? "selected" : ""}>
+                                Active
+                            </option>
+                            <option value="inactive" ${status === "inactive" ? "selected" : ""}>
+                                Inactive
+                            </option>
+                            <option value="suspended" ${status === "suspended" ? "selected" : ""}>
+                                Suspended
+                            </option>
+                        </select>
+
+                        <button class="btn-primary" data-action="search-staff">
+                            Apply filters
+                        </button>
+                    </div>
+                </div>
+
+                ${staff.length ? `
+                    <div class="table-wrapper">
+                        <table class="data-table applicant-management-table">
+                            <thead>
+                                <tr>
+                                    <th>Staff member</th>
+                                    <th>Contact information</th>
+                                    <th>Role</th>
+                                    <th>Account status</th>
+                                    <th>Email verification</th>
+                                    <th>Registered</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>${rows}</tbody>
+                        </table>
+                    </div>
+                ` : `
+                    <div class="empty-state">
+                        <div class="empty-icon">♧</div>
+                        <strong>No staff members found</strong>
+                        Try changing your search or status filter.
+                    </div>
+                `}
+
+                <div class="applicant-pagination">
+                    <span>
+                        Page ${totalPages ? currentPage + 1 : 0}
+                        of ${totalPages}
+                    </span>
+
+                    <div>
+                        <button
+                            class="btn-secondary"
+                            data-action="staff-page"
+                            data-page-number="${currentPage - 1}"
+                            ${currentPage <= 0 ? "disabled" : ""}>
+                            Previous
+                        </button>
+
+                        <button
+                            class="btn-secondary"
+                            data-action="staff-page"
+                            data-page-number="${currentPage + 1}"
+                            ${currentPage + 1 >= totalPages ? "disabled" : ""}>
+                            Next
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    `;
+    }
+
+
+    async function viewStaffDetails(userId) {
+        const result = await request(
+            `${API.staff}/${encodeURIComponent(userId)}`
+        );
+
+        const member = result.staff || {};
+
+        const details = [
+            ["Staff ID", member.userId],
+            ["Full name", member.fullName],
+            ["Email address", member.email],
+            ["Phone number", member.phone],
+            ["Role", member.role],
+            ["Account status", member.accountStatus],
+            ["Email verified", member.emailVerified ? "Yes" : "No"],
+            ["Registration date", formatDate(member.createdAt)],
+            ["Last updated", formatDate(member.updatedAt)]
+        ];
+
+        const detailRows = details.map(([label, value]) => `
+        <div class="detail-item">
+            <span>${escapeHTML(label)}</span>
+            <strong>${escapeHTML(value ?? "Not provided")}</strong>
+        </div>
+    `).join("");
+
+        openDetail(
+            "Staff profile",
+            `
+            <div class="applicant-detail-profile">
+                <span class="overview-small-avatar">
+                    ${escapeHTML(getInitials(member.fullName))}
+                </span>
+
+                <div>
+                    <strong>
+                        ${escapeHTML(member.fullName || "Staff member")}
+                    </strong>
+                    <span>
+                        Staff #${escapeHTML(member.userId ?? "—")}
+                    </span>
+                </div>
+            </div>
+
+            <h4 class="applicant-detail-heading">
+                Staff account information
+            </h4>
+
+            <div class="detail-list">
+                ${detailRows}
+            </div>
+        `
+        );
+    }
 
     /* =====================================================
        MANAGEMENT PAGES
     ===================================================== */
 
     const TABLE_CONFIG = {
-        students: {
-            name: "Students",
-            description: PAGE_DESCRIPTIONS.students,
-            columns: ["Student", "Email", "Course", "Status"],
-            fields: ["fullName", "email", "courseName", "status"],
-            search: "Search students..."
+        applicants: {
+            name: "Applicants",
+            description: PAGE_DESCRIPTIONS.applicants,
+            columns: [
+                "Applicant",
+                "Email",
+                "Phone",
+                "Account Status"
+            ],
+            fields: [
+                "fullName",
+                "email",
+                "phone",
+                "accountStatus"
+            ],
+            search: "Search applicants by name, email or phone..."
         },
 
         staff: {
@@ -871,6 +1726,285 @@
         }
     };
 
+    function openCreateStaffForm() {
+        openDetail(
+            "Register Admissions Officer",
+            `
+        <form id="createStaffForm" class="staff-registration-form" novalidate>
+
+            <div class="staff-form-intro">
+                <span class="staff-form-icon">♙</span>
+                <div>
+                    <h3>Create staff account</h3>
+                    <p>Register a new member of the Auroria admissions team.</p>
+                </div>
+            </div>
+
+            <div class="staff-form-section">
+                <div class="staff-form-section-heading">
+                    <span>01</span>
+                    <div>
+                        <h4>Personal information</h4>
+                        <p>Enter the officer's contact details.</p>
+                    </div>
+                </div>
+
+                <div class="staff-form-grid">
+
+                    <div class="staff-field staff-field-full">
+                        <label for="staffFullName">Full name <span>*</span></label>
+                        <input
+                            id="staffFullName"
+                            name="fullName"
+                            type="text"
+                            minlength="2"
+                            maxlength="80"
+                            autocomplete="name"
+                            placeholder="e.g. Adebayo Johnson"
+                            pattern="[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ .'-]{0,78}[A-Za-zÀ-ÖØ-öø-ÿ]"
+                            required
+                        >
+                        <small>Use the officer's full legal name.</small>
+                    </div>
+
+                    <div class="staff-field">
+                        <label for="staffEmail">Email address <span>*</span></label>
+                        <input
+                            id="staffEmail"
+                            name="email"
+                            type="email"
+                            maxlength="254"
+                            autocomplete="email"
+                            placeholder="officer@auroria.edu"
+                            required
+                        >
+                        <small>Must be a unique email address.</small>
+                    </div>
+
+                    <div class="staff-field">
+                        <label for="staffPhone">Phone number <span>*</span></label>
+                        <input
+                            id="staffPhone"
+                            name="phone"
+                            type="tel"
+                            inputmode="tel"
+                            maxlength="16"
+                            autocomplete="tel"
+                            placeholder="+2348012345678"
+                            pattern="\+?[1-9][0-9]{6,14}"
+                            title="Enter 7–15 digits, optionally starting with +."
+                            required
+                        >
+                        <small>Include the country code where possible.</small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="staff-form-section">
+                <div class="staff-form-section-heading">
+                    <span>02</span>
+                    <div>
+                        <h4>Account security</h4>
+                        <p>Create a secure initial password.</p>
+                    </div>
+                </div>
+
+                <div class="staff-form-grid">
+
+                    <div class="staff-field staff-field-full">
+                        <label for="staffPassword">Password <span>*</span></label>
+
+                        <div class="staff-password-wrap">
+                            <input
+                                id="staffPassword"
+                                name="password"
+                                type="password"
+                                minlength="12"
+                                maxlength="72"
+                                autocomplete="new-password"
+                                placeholder="Create a strong password"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="staff-password-toggle"
+                                data-action="toggle-staff-password"
+                                data-target="staffPassword"
+                                aria-label="Show password"
+                            >Show</button>
+                        </div>
+
+                        <div class="staff-password-meter">
+                            <div class="staff-password-meter-track">
+                                <span id="staffPasswordMeter"></span>
+                            </div>
+                            <span id="staffPasswordStrength">Password strength</span>
+                        </div>
+
+                        <div class="staff-password-rules">
+                            <span data-rule="length">○ At least 12 characters</span>
+                            <span data-rule="upper">○ One uppercase letter</span>
+                            <span data-rule="lower">○ One lowercase letter</span>
+                            <span data-rule="number">○ One number</span>
+                            <span data-rule="special">○ One special character</span>
+                        </div>
+                    </div>
+
+                    <div class="staff-field staff-field-full">
+                        <label for="staffConfirmPassword">
+                            Confirm password <span>*</span>
+                        </label>
+
+                        <div class="staff-password-wrap">
+                            <input
+                                id="staffConfirmPassword"
+                                name="confirmPassword"
+                                type="password"
+                                minlength="12"
+                                maxlength="72"
+                                autocomplete="new-password"
+                                placeholder="Enter the password again"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="staff-password-toggle"
+                                data-action="toggle-staff-password"
+                                data-target="staffConfirmPassword"
+                                aria-label="Show password"
+                            >Show</button>
+                        </div>
+
+                        <small id="staffPasswordMatch">
+                            Both passwords must match.
+                        </small>
+                    </div>
+
+                    <div class="staff-field staff-field-full">
+                        <label>Assigned role</label>
+                        <div class="staff-role-preview">
+                            <span class="staff-role-icon">♧</span>
+                            <div>
+                                <strong>Admissions Officer</strong>
+                                <small>ADMISSIONS_OFFICER</small>
+                            </div>
+                            <span class="staff-role-fixed">Fixed role</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="staff-form-notice">
+                <strong>Account creation notice</strong>
+                <p>
+                    The account will be created as active. Email verification
+                    will remain pending until the officer completes verification.
+                </p>
+            </div>
+
+            <div class="staff-form-actions">
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    data-action="close-dialog"
+                >Cancel</button>
+
+                <button
+                    type="submit"
+                    class="btn-primary staff-submit-button"
+                >
+                    Create staff account
+                </button>
+            </div>
+
+        </form>
+        `
+        );
+    }
+
+
+    function getPasswordRules(password) {
+        return {
+            length: password.length >= 12 && password.length <= 72,
+            upper: /[A-Z]/.test(password),
+            lower: /[a-z]/.test(password),
+            number: /\d/.test(password),
+            special: /[^A-Za-z0-9\s]/.test(password)
+        };
+    }
+
+    function isStrongStaffPassword(password) {
+        const rules = getPasswordRules(password);
+
+        return Object.values(rules).every(Boolean)
+            && !/\s/.test(password)
+            && new TextEncoder().encode(password).length <= 72;
+    }
+
+    function updateStaffPasswordUI() {
+        const password = $("#staffPassword")?.value || "";
+        const confirm = $("#staffConfirmPassword")?.value || "";
+
+        const rules = getPasswordRules(password);
+
+        Object.entries(rules).forEach(([name, passed]) => {
+            const element = $(`[data-rule="${name}"]`);
+
+            if (!element) return;
+
+            element.classList.toggle("passed", passed);
+            element.textContent =
+                `${passed ? "✓" : "○"} ${{
+                    length: "At least 12 characters",
+                    upper: "One uppercase letter",
+                    lower: "One lowercase letter",
+                    number: "One number",
+                    special: "One special character"
+                }[name]}`;
+        });
+
+        const score = Object.values(rules).filter(Boolean).length;
+
+        const meter = $("#staffPasswordMeter");
+        const strength = $("#staffPasswordStrength");
+
+        if (meter) {
+            meter.style.width = `${score * 20}%`;
+            meter.dataset.strength =
+                score <= 2 ? "weak" :
+                    score <= 4 ? "medium" : "strong";
+        }
+
+        if (strength) {
+            strength.textContent =
+                !password ? "Password strength" :
+                    score <= 2 ? "Weak password" :
+                        score <= 4 ? "Moderate password" :
+                            "Strong password";
+        }
+
+        const matchMessage = $("#staffPasswordMatch");
+
+        if (matchMessage) {
+            const matches = confirm.length > 0 && password === confirm;
+
+            matchMessage.textContent =
+                !confirm ? "Both passwords must match." :
+                    matches ? "Passwords match." :
+                        "Passwords do not match.";
+
+            matchMessage.classList.toggle("matched", matches);
+            matchMessage.classList.toggle(
+                "not-matched",
+                confirm.length > 0 && !matches
+            );
+        }
+    }
+
+
+
     async function renderManagementPage(page) {
         const config = TABLE_CONFIG[page];
 
@@ -933,6 +2067,7 @@
                     data-action="refresh-page">
                     ↻ Refresh
                 </button>
+                
             </section>
 
             <section class="card">
@@ -1325,10 +2460,30 @@
                 await renderPage(state.currentPage);
                 break;
 
+            case "search-staff":
+                await renderStaffManagement(0);
+                break;
+
+            case "staff-page":
+                await renderStaffManagement(
+                    Number(actionButton.dataset.pageNumber)
+                );
+                break;
+
+            case "view-staff":
+                try {
+                    await viewStaffDetails(actionButton.dataset.staffId);
+                } catch (error) {
+                    showToast(error.message, "error");
+                }
+                break;
             case "close-dialog":
                 closeDetail();
                 break;
 
+            case "create-staff":
+                openCreateStaffForm();
+                break;
             case "close-confirm":
                 closeConfirm();
                 break;
@@ -1345,6 +2500,46 @@
                 );
                 break;
 
+            case "search-applicants":
+                await renderApplicantManagement(0);
+                break;
+
+            case "applicant-page":
+                await renderApplicantManagement(
+                    Number(actionButton.dataset.pageNumber)
+                );
+                break;
+
+            case "view-applicant":
+                try {
+                    await viewApplicantDetails(
+                        actionButton.dataset.applicantId
+                    );
+                } catch (error) {
+                    showToast(error.message, "error");
+                }
+                break;
+
+            case "toggle-staff-password": {
+                const input = document.getElementById(
+                    actionButton.dataset.target
+                );
+
+                if (!input) break;
+
+                const showing = input.type === "password";
+
+                input.type = showing ? "text" : "password";
+                actionButton.textContent = showing ? "Hide" : "Show";
+                actionButton.setAttribute(
+                    "aria-label",
+                    showing ? "Hide password" : "Show password"
+                );
+
+                break;
+            }
+
+
             case "departments-info":
                 showToast(
                     "Department management requires its backend endpoint.",
@@ -1353,6 +2548,118 @@
                 break;
         }
     });
+
+
+    document.addEventListener("input", event => {
+        if (
+            event.target.matches("#staffPassword") ||
+            event.target.matches("#staffConfirmPassword")
+        ) {
+            updateStaffPasswordUI();
+        }
+    });
+
+    document.addEventListener("submit", async event => {
+        if (event.target.id !== "createStaffForm") return;
+
+        event.preventDefault();
+
+        const form = event.target;
+
+        const fullName = $("#staffFullName").value.trim();
+        const email = $("#staffEmail").value.trim().toLowerCase();
+        const phone = $("#staffPhone").value.trim();
+        const password = $("#staffPassword").value;
+        const confirmPassword = $("#staffConfirmPassword").value;
+
+        const namePattern =
+            /^[\p{L}][\p{L} .'-]{0,78}[\p{L}]$/u;
+
+        const emailPattern =
+            /^[A-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?(?:\.[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?)+$/i;
+
+        const phonePattern = /^\+?[1-9]\d{6,14}$/;
+
+        if (!namePattern.test(fullName)) {
+            showToast(
+                "Enter a valid full name using at least two letters.",
+                "error"
+            );
+            $("#staffFullName").focus();
+            return;
+        }
+
+        if (fullName.length > 80) {
+            showToast("Full name cannot exceed 80 characters.", "error");
+            return;
+        }
+
+        if (email.length > 254 || !emailPattern.test(email)) {
+            showToast("Enter a valid email address.", "error");
+            $("#staffEmail").focus();
+            return;
+        }
+
+        if (!phonePattern.test(phone)) {
+            showToast(
+                "Enter a valid international phone number.",
+                "error"
+            );
+            $("#staffPhone").focus();
+            return;
+        }
+
+        if (!isStrongStaffPassword(password)) {
+            showToast(
+                "Your password does not meet all security requirements.",
+                "error"
+            );
+            $("#staffPassword").focus();
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showToast("Passwords do not match.", "error");
+            $("#staffConfirmPassword").focus();
+            return;
+        }
+
+        if (!form.reportValidity()) return;
+
+        const submitButton = form.querySelector(
+            'button[type="submit"]'
+        );
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Creating account...";
+
+        try {
+            const result = await request(API.staff, {
+                method: "POST",
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    phone,
+                    password
+                })
+            });
+
+            closeDetail();
+
+            showToast(
+                result.message || "Admissions officer registered successfully."
+            );
+
+            await renderStaffManagement(0);
+
+        } catch (error) {
+            showToast(error.message, "error");
+
+            submitButton.disabled = false;
+            submitButton.textContent = "Create staff account";
+        }
+    });
+
 
     $("#confirmActionButton")?.addEventListener("click", async () => {
         if (typeof state.confirmCallback !== "function") {
